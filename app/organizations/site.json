@@ -32,10 +32,8 @@
             "description": "The uri pointing to the shapefile of the site"
           },
           "trees": {
-            "type": "blob",
-            "accept": ["application/geo+json", "application/json"],
-            "maxSize": 10485760,
-            "description": "GeoJSON blob containing tree planting data for this site (max 10MB)"
+            "type": "union",
+            "refs": ["#measuredTreesUri", "#measuredTreesBlob"]
           }
         }
       }
