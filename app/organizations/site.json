@@ -1,0 +1,44 @@
+{
+  "lexicon": 1,
+  "id": "app.gainforest.organization.site",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A declaration of a site for an organization",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["name", "lat", "lon", "area"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the site"
+          },
+          "lat": {
+            "type": "integer",
+            "description": "The latitude of the centerpoint of the site"
+          },
+          "lon": {
+            "type": "integer",
+            "description": "The longitude of the centerpoint of the site"
+          },
+          "area": {
+            "type": "integer",
+            "description": "The area of the site in hectares"
+          },
+          "shapefile": {
+            "type": "string",
+            "format": "uri",
+            "description": "The uri pointing to the shapefile of the site"
+          },
+          "trees": {
+            "type": "blob",
+            "accept": ["application/geo+json", "application/json"],
+            "maxSize": 10485760,
+            "description": "GeoJSON blob containing tree planting data for this site (max 10MB)"
+          }
+        }
+      }
+    }
+  }
+}
