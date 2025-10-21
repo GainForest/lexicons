@@ -72,7 +72,7 @@
           "visibility": {
             "type": "string",
             "description": "The visibility of the organization or project in the Green Globe",
-            "enum": ["Featured", "Hidden"]
+            "enum": ["Public", "Hidden"]
           }
         }
       }
