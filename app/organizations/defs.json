@@ -12,8 +12,7 @@
         },
         "country": {
           "type": "string",
-          "description": "The country of the organization",
-          "enum": ["US", "GB", "CA", "AU", "NZ", "Other"]
+          "description": "The two-letter country code of the organization, in ISO 3166-1 alpha-2 format"
         },
         "did": {
           "type": "string",
