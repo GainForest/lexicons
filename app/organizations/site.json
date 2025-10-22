@@ -15,25 +15,29 @@
             "description": "The name of the site"
           },
           "lat": {
-            "type": "integer",
+            "type": "string",
             "description": "The latitude of the centerpoint of the site"
           },
           "lon": {
-            "type": "integer",
+            "type": "string",
             "description": "The longitude of the centerpoint of the site"
           },
           "area": {
-            "type": "integer",
+            "type": "string",
             "description": "The area of the site in hectares"
           },
           "shapefile": {
-            "type": "string",
-            "format": "uri",
-            "description": "The uri pointing to the shapefile of the site"
+            "type": "union",
+            "refs": [
+              "app.gainforest.common.defs#uri",
+              "app.gainforest.common.defs#smallBlob"
+            ],
+            "description": "URI or blob pointing to a geoJSON file containing the site boundaries"
           },
           "trees": {
             "type": "union",
-            "refs": ["#measuredTreesUri", "#measuredTreesBlob"]
+            "refs": ["app.gainforest.common.defs#uri", "app.gainforest.common.defs#smallBlob"],
+            "description": "URI or blob pointing to GeoJSON data containing tree planting data for this site"
           }
         }
       }

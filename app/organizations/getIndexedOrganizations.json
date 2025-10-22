@@ -9,7 +9,6 @@
         "type": "params",
         "properties": {}
       },
-
       "output": {
         "encoding": "application/json",
         "schema": {
