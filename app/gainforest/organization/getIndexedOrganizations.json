@@ -19,7 +19,7 @@
               "type": "array",
               "items": {
                 "type": "ref",
-                "ref": "app.common.defs#indexedOrganization"
+                "ref": "common.defs#indexedOrganization"
               }
             }
           }
