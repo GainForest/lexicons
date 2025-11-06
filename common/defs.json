@@ -21,12 +21,16 @@
     },
     "indexedOrganization": {
       "type": "object",
-      "required": ["id", "name", "description", "logo", "website"],
+      "required": ["id", "name"],
       "properties": {
         "id": {
           "type": "string",
           "format": "uri",
           "description": "The URI of the organization"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the organization"
         }
       }
     }
