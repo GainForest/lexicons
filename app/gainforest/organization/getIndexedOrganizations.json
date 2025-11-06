@@ -19,7 +19,7 @@
               "type": "array",
               "items": {
                 "type": "ref",
-                "ref": "common.defs#indexedOrganization"
+                "ref": "app.gainforest.common.defs#indexedOrganization"
               }
             }
           }
