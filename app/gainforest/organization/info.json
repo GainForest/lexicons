@@ -38,8 +38,13 @@
           },
           "coverImage": {
             "type": "blob",
-            "description": "The cover image of the organization or project",
-            "accept": ["image/*"]
+            "ref": "app.gainforest.common.defs#smallImage",
+            "description": "Cover image for the organization"
+          },
+          "logo": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#smallImage",
+            "description": "Logo for the organization"
           },
           "objectives": {
             "type": "array",
