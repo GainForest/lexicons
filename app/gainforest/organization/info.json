@@ -37,7 +37,7 @@
             "maxLength": 5000
           },
           "coverImage": {
-            "type": "blob",
+            "type": "ref",
             "ref": "app.gainforest.common.defs#smallImage",
             "description": "Cover image for the organization"
           },
