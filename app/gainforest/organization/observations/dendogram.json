@@ -1,0 +1,32 @@
+{
+  "lexicon": 1,
+  "id": "app.gainforest.organization.observations.dendogram",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A declaration of a dendogram observation for an organization",
+      "key": "literal:self",
+      "record": {
+        "type": "object",
+        "required": ["dendogram", "createdAt"],
+        "properties": {
+          "dendogram": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#smallBlob",
+            "description": "An SVG of the dendogram uploaded as blob"
+          },
+          "NEEDSREVIEW_radialPhylogram": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#smallBlob",
+            "description": "A PDF of the radial phylogram uploaded as blob"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time of the creation of the record",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

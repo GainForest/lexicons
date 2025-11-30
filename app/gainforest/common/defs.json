@@ -81,6 +81,69 @@
           "description": "The name of the organization"
         }
       }
+    },
+    "flora": {
+      "type": "object",
+      "required": ["commonName", "botanicalName", "category"],
+      "properties": {
+        "commonName": {
+          "type": "string",
+          "description": "The common name of the flora"
+        },
+        "botanicalName": {
+          "type": "string",
+          "description": "The botanical name of the flora"
+        },
+        "category": {
+          "type": "string",
+          "description": "A combination of the category of the flora and of the ecosystem.",
+          "enum": [
+            "tree.native",
+            "tree.invasive",
+            "herb.native",
+            "herb.invasive"
+          ]
+        },
+        "edibleParts": {
+          "type": "array",
+          "description": "The edible parts of the flora",
+          "items": {
+            "type": "string",
+            "description": "The edible part of the flora"
+          }
+        },
+        "otherInfo": {
+          "type": "unknown",
+          "description": "Additional information about the flora"
+        }
+      }
+    },
+    "fauna": {
+      "type": "object",
+      "required": ["commonName", "scientificName", "category"],
+      "properties": {
+        "commonName": {
+          "type": "string",
+          "description": "The common name of the fauna"
+        },
+        "scientificName": {
+          "type": "string",
+          "description": "The scientific name of the fauna"
+        },
+        "category": {
+          "type": "string",
+          "description": "The category under which the fauna falls.",
+          "enum": [
+            "reptile",
+            "amphibian",
+            "fish",
+            "bird",
+            "mammal",
+            "insect",
+            "IUCN.red-list"
+          ]
+        }
+      }
     }
   }
 }

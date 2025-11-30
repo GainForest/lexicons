@@ -1,19 +1,19 @@
 {
   "lexicon": 1,
-  "id": "app.gainforest.organization.measuredTrees",
+  "id": "app.gainforest.organization.predictions.flora",
   "defs": {
     "main": {
       "type": "record",
-      "description": "A declaration of measured trees for an organization",
+      "description": "A declaration of a flora prediction for an organization",
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["shapefile", "createdAt"],
+        "required": ["predictedFlora", "createdAt"],
         "properties": {
-          "shapefile": {
-            "type": "string",
-            "format": "uri",
-            "description": "The uri pointing to the shapefile of the measured trees"
+          "predictedFlora": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#flora",
+            "description": "The flora being predicted"
           },
           "createdAt": {
             "type": "string",
