@@ -8,7 +8,7 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["name", "description", "ecocerts", "sites", "createdAt"],
+        "required": ["name", "shortDescription", "ecocerts", "createdAt"],
         "properties": {
           "name": {
             "type": "string",
@@ -29,22 +29,6 @@
               "type": "string",
               "format": "at-uri",
               "description": "The reference to the ecocert record in the PDS"
-            }
-          },
-          "collaborators": {
-            "type": "array",
-            "description": "An array of names or dids of the collaborators related to the project",
-            "items": {
-              "type": "string",
-              "description": "The name or did of the collaborator"
-            }
-          },
-          "funders": {
-            "type": "array",
-            "description": "An array of names or dids of the funders related to the project",
-            "items": {
-              "type": "string",
-              "description": "The name or did of the funder"
             }
           },
           "createdAt": {

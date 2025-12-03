@@ -15,11 +15,6 @@
             "ref": "app.gainforest.common.defs#smallBlob",
             "description": "An SVG of the dendogram uploaded as blob"
           },
-          "NEEDSREVIEW_radialPhylogram": {
-            "type": "ref",
-            "ref": "app.gainforest.common.defs#smallBlob",
-            "description": "A PDF of the radial phylogram uploaded as blob"
-          },
           "createdAt": {
             "type": "string",
             "description": "The date and time of the creation of the record",

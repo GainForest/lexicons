@@ -1,6 +1,6 @@
 {
   "lexicon": 1,
-  "id": "app.gainforest.organization.measuredTrees",
+  "id": "app.gainforest.organization.measuredTreesCluster",
   "defs": {
     "main": {
       "type": "record",

@@ -8,12 +8,15 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["predictedFlora", "createdAt"],
+        "required": ["gbifTaxonKeys", "createdAt"],
         "properties": {
-          "predictedFlora": {
-            "type": "ref",
-            "ref": "app.gainforest.common.defs#flora",
-            "description": "The flora being predicted"
+          "gbifTaxonKeys": {
+            "type": "array",
+            "description": "An array of GBIF taxon keys for each flora prediction",
+            "items": {
+              "type": "string",
+              "description": "The GBIF taxon key of the flora prediction"
+            }
           },
           "createdAt": {
             "type": "string",
