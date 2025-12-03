@@ -8,7 +8,13 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["name", "shortDescription", "ecocerts", "createdAt"],
+        "required": [
+          "name",
+          "shortDescription",
+          "ecocerts",
+          "layers",
+          "createdAt"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -29,6 +35,15 @@
               "type": "string",
               "format": "at-uri",
               "description": "The reference to the ecocert record in the PDS"
+            }
+          },
+          "layers": {
+            "type": "array",
+            "description": "An array of at-uris pointing to the records of the layers related to the project",
+            "items": {
+              "type": "string",
+              "format": "at-uri",
+              "description": "The reference to the layer record in the PDS"
             }
           },
           "createdAt": {
