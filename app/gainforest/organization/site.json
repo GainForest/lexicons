@@ -27,12 +27,8 @@
             "description": "The area of the site in hectares"
           },
           "shapefile": {
-            "type": "union",
-            "refs": [
-              "app.gainforest.common.defs#uri",
-              "app.gainforest.common.defs#smallBlob"
-            ],
-            "description": "URI or blob pointing to a geoJSON file containing the site boundaries"
+            "ref": "app.gainforest.common.defs#smallBlob",
+            "description": "A blob pointing to a geoJSON file containing the site boundaries"
           },
           "createdAt": {
             "type": "string",

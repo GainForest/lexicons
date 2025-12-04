@@ -12,6 +12,8 @@
           "name",
           "shortDescription",
           "ecocerts",
+          "sites",
+          "measuredTreesClusters",
           "layers",
           "createdAt"
         ],
@@ -44,6 +46,24 @@
               "type": "string",
               "format": "at-uri",
               "description": "The reference to the layer record in the PDS"
+            }
+          },
+          "sites": {
+            "type": "array",
+            "description": "An array of at-uris pointing to the records of the sites related to the project",
+            "items": {
+              "type": "string",
+              "format": "at-uri",
+              "description": "The reference to the site record in the PDS"
+            }
+          },
+          "measuredTreesClusters": {
+            "type": "array",
+            "description": "An array of at-uris pointing to the records of the measured trees clusters related to the project",
+            "items": {
+              "type": "string",
+              "format": "at-uri",
+              "description": "The reference to the measured trees cluster record in the PDS"
             }
           },
           "createdAt": {
