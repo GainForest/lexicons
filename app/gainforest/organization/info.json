@@ -14,7 +14,8 @@
           "longDescription",
           "objectives",
           "country",
-          "visibility"
+          "visibility",
+          "createdAt"
         ],
         "properties": {
           "displayName": {
@@ -77,6 +78,11 @@
             "type": "string",
             "description": "The visibility of the organization or project in the Green Globe",
             "enum": ["Public", "Hidden"]
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time of the creation of the record",
+            "format": "datetime"
           }
         }
       }

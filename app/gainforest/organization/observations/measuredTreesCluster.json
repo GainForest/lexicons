@@ -1,0 +1,27 @@
+{
+  "lexicon": 1,
+  "id": "app.gainforest.organization.observations.measuredTreesCluster",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A declaration of a measured trees cluster for an organization",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["shapefile", "createdAt"],
+        "properties": {
+          "shapefile": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#smallBlob",
+            "description": "A blob pointing to a shapefile of the measured trees cluster"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time of the creation of the record",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}
