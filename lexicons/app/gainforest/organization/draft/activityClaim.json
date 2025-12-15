@@ -1,10 +1,10 @@
 {
   "lexicon": 1,
-  "id": "app.gainforest.organization.draft.ecocert",
+  "id": "app.gainforest.organization.draft.activityClaim",
   "defs": {
     "main": {
       "type": "record",
-      "description": "A declaration of an unpublished ecocert for an organization",
+      "description": "A declaration of an unpublished Activity Claim for an organization",
       "key": "tid",
       "record": {
         "type": "object",
@@ -24,19 +24,19 @@
         "properties": {
           "title": {
             "type": "string",
-            "description": "The title of the ecocert"
+            "description": "The title of the Activity Claim"
           },
           "coverImage": {
             "type": "ref",
             "ref": "app.gainforest.common.defs#smallImage",
-            "description": "The cover image of the ecocert"
+            "description": "The cover image of the Activity Claim"
           },
           "workScopes": {
             "type": "array",
-            "description": "The work scopes of the ecocert",
+            "description": "The work scopes of the Activity Claim",
             "items": {
               "type": "string",
-              "description": "The work scope of the ecocert"
+              "description": "The work scope of the Activity Claim"
             }
           },
           "workStartDate": {
@@ -51,18 +51,18 @@
           },
           "description": {
             "type": "string",
-            "description": "The description of the ecocert in markdown"
+            "description": "The description of the Activity Claim in markdown"
           },
           "shortDescription": {
             "type": "string",
-            "description": "The short description of the ecocert in markdown"
+            "description": "The short description of the Activity Claim in markdown"
           },
           "contributors": {
             "type": "array",
-            "description": "The contributors of the ecocert in markdown",
+            "description": "The contributors of the Activity Claim in markdown",
             "items": {
               "type": "string",
-              "description": "The contributor of the ecocert"
+              "description": "The contributor of the Activity Claim"
             }
           },
           "site": {

@@ -11,7 +11,7 @@
         "required": [
           "name",
           "shortDescription",
-          "ecocerts",
+          "activityClaims",
           "sites",
           "measuredTreesClusters",
           "layers",
@@ -30,13 +30,13 @@
             "type": "string",
             "description": "The short description of the project"
           },
-          "ecocerts": {
+          "activityClaims": {
             "type": "array",
-            "description": "An array of at-uris pointing to the records of the ecocerts related to the project",
+            "description": "An array of at-uris pointing to the records of the Activity Claims related to the project",
             "items": {
               "type": "string",
               "format": "at-uri",
-              "description": "The reference to the ecocert record in the PDS"
+              "description": "The reference to the Activity Claim record in the PDS"
             }
           },
           "layers": {
