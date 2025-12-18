@@ -32,7 +32,7 @@
           },
           "longDescription": {
             "type": "string",
-            "description": "The long description of the organization or project in markdown",
+            "description": "The long description of the organization or project in richtext",
             "minLength": 50,
             "maxLength": 5000
           },
