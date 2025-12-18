@@ -11,10 +11,6 @@
         "required": [
           "name",
           "shortDescription",
-          "activityClaims",
-          "sites",
-          "measuredTreesClusters",
-          "layers",
           "createdAt"
         ],
         "properties": {
@@ -55,15 +51,6 @@
               "type": "string",
               "format": "at-uri",
               "description": "The reference to the site record in the PDS"
-            }
-          },
-          "measuredTreesClusters": {
-            "type": "array",
-            "description": "An array of at-uris pointing to the records of the measured trees clusters related to the project",
-            "items": {
-              "type": "string",
-              "format": "at-uri",
-              "description": "The reference to the measured trees cluster record in the PDS"
             }
           },
           "createdAt": {
