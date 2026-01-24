@@ -10,6 +10,7 @@ lexicons/
     gainforest/
       common/           # Shared definitions (blobs, images, URIs)
       dwc/              # Darwin Core biodiversity records
+      evaluator/        # Decentralized evaluator services
       organization/     # Organization-related schemas
         observations/   # Observation records (dendogram, fauna, flora, trees)
         predictions/    # Prediction records (fauna, flora)
@@ -48,6 +49,40 @@ Darwin Core (DwC) aligned biodiversity records following the [TDWG Simple Darwin
 **Relationships:**
 - Multiple `occurrence` records can reference one `event` via `eventRef` (AT-URI)
 - Multiple `measurement` records can reference one `occurrence` via `occurrenceRef` (AT-URI)
+
+### `app.gainforest.evaluator`
+
+Decentralized evaluator services for attaching structured, typed evaluation data to records. A more sophisticated evolution of the [Bluesky labeler pattern](https://docs.bsky.app/docs/advanced-guides/moderation) -- instead of string labels, evaluators produce typed results with confidence scores and method provenance.
+
+| Lexicon | Type | Description |
+|---------|------|-------------|
+| `evaluator.defs` | defs | Shared types: subjectRef, methodInfo, candidateTaxon, qualityFlag, derivedMeasurement, and result types (speciesId, dataQuality, verification, classification, measurement) |
+| `evaluator.service` | record | Declaration record (rkey `self`) registering an account as an evaluator with policies, supported types, and subject collections |
+| `evaluator.evaluation` | record | Evaluation result published by an evaluator — typed result union, confidence, method provenance, negation/supersedes versioning |
+| `evaluator.subscription` | record | User subscribes to an evaluator — published in user's own repo, with optional collection/type filters |
+
+**Discovery:** Uses ATProto-native HTTP header injection (like labelers):
+- Client sends `atproto-accept-evaluators: did:plc:eval1,did:plc:eval2`
+- AppView attaches matching evaluations inline in responses under an `evaluations` key
+- AppView responds with `atproto-content-evaluators` header confirming resolved evaluators
+
+**Processing:** Evaluators watch the Jetstream firehose for subscriber records and matching subject collections, then publish evaluation records to their own repo.
+
+**Result types:** `speciesIdResult` (ranked candidate taxa), `dataQualityResult` (per-field quality flags), `verificationResult` (expert confirm/reject), `classificationResult` (generic categories), `measurementResult` (derived measurements).
+
+**Extending with new result types:**
+
+1. **Experimental** — Use the `dynamicProperties` field (JSON string) on the evaluation record to prototype new result structures without any schema change. Omit `result` and put your data in `dynamicProperties`:
+   ```json
+   {
+     "evaluationType": "my-new-type",
+     "dynamicProperties": "{\"myField\": \"value\", \"score\": 42}",
+     "confidence": 850,
+     "createdAt": "2025-01-25T00:00:00.000Z"
+   }
+   ```
+
+2. **Formal** — Once the type stabilizes, define it in `evaluator/defs.json` and add its ref to the `result` union in `evaluator/evaluation.json`, then re-publish with `goat lex publish --update`. ATProto unions are open by default, so existing clients that don't recognize the new `$type` will skip it gracefully.
 
 ### `app.gainforest.organization`
 
@@ -106,6 +141,7 @@ goat resolve your-handle.bsky.social
 |--------------|------------|-------|
 | `app.gainforest.common.*` | `_lexicon.common.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.dwc.*` | `_lexicon.dwc.gainforest.app` | `did=did:plc:xxxxx` |
+| `app.gainforest.evaluator.*` | `_lexicon.evaluator.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.*` | `_lexicon.organization.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.observations.*` | `_lexicon.observations.organization.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.predictions.*` | `_lexicon.predictions.organization.gainforest.app` | `did=did:plc:xxxxx` |
