@@ -8,16 +8,69 @@ This repository contains ATProto lexicon schemas for the Gainforest ecosystem.
 lexicons/
   app/
     gainforest/
-      common/           # Shared definitions
+      common/           # Shared definitions (blobs, images, URIs)
+      dwc/              # Darwin Core biodiversity records
       organization/     # Organization-related schemas
-        observations/   # Observation records (fauna, flora, etc.)
-        predictions/    # Prediction records
+        observations/   # Observation records (dendogram, fauna, flora, trees)
+        predictions/    # Prediction records (fauna, flora)
   com/
     atproto/
       repo/             # Standard ATProto references
   pub/
     leaflet/            # Leaflet document schemas
+      blocks/           # Content block types (text, image, code, etc.)
+      pages/            # Page/document compositions
+      richtext/         # Rich text annotations (facets)
 ```
+
+## Namespaces
+
+### `app.gainforest.common`
+
+Shared type definitions used across other lexicons:
+
+- `uri` - Object containing a URI reference
+- `smallBlob` / `largeBlob` - Generic blob references (10MB / 100MB)
+- `smallImage` / `largeImage` - Image blobs (5MB / 10MB, JPEG/PNG/WebP)
+- `indexedOrganization` - Organization identity object
+
+### `app.gainforest.dwc`
+
+Darwin Core (DwC) aligned biodiversity records following the [TDWG Simple Darwin Core standard](https://dwc.tdwg.org/simple/). Uses a star-schema pattern where occurrences reference shared events.
+
+| Lexicon | Type | Description |
+|---------|------|-------------|
+| `dwc.defs` | defs | Shared types: geolocation, taxonIdentification, enums (basisOfRecord, sex, taxonRank, etc.) |
+| `dwc.event` | record | Sampling/collecting event with location, protocol, and effort metadata |
+| `dwc.occurrence` | record | Single organism observation at a place and time |
+| `dwc.measurement` | record | MeasurementOrFact extension linked to an occurrence (DBH, height, etc.) |
+
+**Relationships:**
+- Multiple `occurrence` records can reference one `event` via `eventRef` (AT-URI)
+- Multiple `measurement` records can reference one `occurrence` via `occurrenceRef` (AT-URI)
+
+### `app.gainforest.organization`
+
+Organization profiles, site configurations, and biodiversity data:
+
+- `info` - Organization profile information
+- `defaultSite` - Default site configuration
+- `layer` - Map layer definitions
+- `getIndexedOrganizations` - Query for indexed organizations
+- `observations/` - Observation records (dendogram, fauna, flora, measuredTreesCluster)
+- `predictions/` - Prediction records (fauna, flora)
+
+### `pub.leaflet`
+
+Leaflet document schemas for structured content authoring:
+
+- **blocks/** - Content block types: text, header, image, code, math, blockquote, iframe, button, poll, page, bskyPost, horizontalRule, unorderedList, website
+- **pages/** - Document compositions (`linearDocument` - ordered sequence of blocks with alignment)
+- **richtext/** - Text annotation via facets (bold, italic, underline, strikethrough, code, highlight, links, mentions)
+
+### `com.atproto.repo`
+
+Standard ATProto strong reference type (`strongRef`).
 
 ## Publishing Lexicons
 
@@ -52,9 +105,13 @@ goat resolve your-handle.bsky.social
 | NSID Pattern | DNS Record | Value |
 |--------------|------------|-------|
 | `app.gainforest.common.*` | `_lexicon.common.gainforest.app` | `did=did:plc:xxxxx` |
+| `app.gainforest.dwc.*` | `_lexicon.dwc.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.*` | `_lexicon.organization.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.observations.*` | `_lexicon.observations.organization.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.predictions.*` | `_lexicon.predictions.organization.gainforest.app` | `did=did:plc:xxxxx` |
+| `pub.leaflet.blocks.*` | `_lexicon.blocks.leaflet.pub` | `did=did:plc:xxxxx` |
+| `pub.leaflet.pages.*` | `_lexicon.pages.leaflet.pub` | `did=did:plc:xxxxx` |
+| `pub.leaflet.richtext.*` | `_lexicon.richtext.leaflet.pub` | `did=did:plc:xxxxx` |
 
 **DNS Provider Notes:**
 - In most DNS providers, enter only the subdomain part (e.g., `_lexicon.common` for Namecheap)
@@ -158,3 +215,6 @@ goat get at://your-handle.bsky.social/com.atproto.lexicon.schema/app.gainforest.
 - [ATProto Lexicon Specification](https://atproto.com/specs/lexicon)
 - [goat CLI Documentation](https://github.com/bluesky-social/goat)
 - [Lexicon Examples](https://github.com/bluesky-social/atproto/tree/main/lexicons)
+- [Darwin Core Standard](https://dwc.tdwg.org/)
+- [Simple Darwin Core](https://dwc.tdwg.org/simple/)
+- [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c)

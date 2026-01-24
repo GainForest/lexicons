@@ -4,7 +4,7 @@
   "defs": {
     "main": {
       "type": "record",
-      "description": "A declaration of a flora observation for an organization",
+      "description": "DEPRECATED: Use app.gainforest.dwc.occurrence instead. A declaration of a flora observation for an organization.",
       "key": "tid",
       "record": {
         "type": "object",
