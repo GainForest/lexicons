@@ -108,6 +108,7 @@
         },
         "severity": {
           "type": "string",
+          "maxGraphemes": 64,
           "knownValues": ["error", "warning", "info"],
           "description": "Severity level of the quality issue."
         }
@@ -194,6 +195,7 @@
       "properties": {
         "status": {
           "type": "string",
+          "maxGraphemes": 64,
           "knownValues": ["confirmed", "rejected", "uncertain"],
           "description": "Verification status: confirmed, rejected, or uncertain."
         },
