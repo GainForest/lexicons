@@ -1,75 +1,300 @@
 {
   "lexicon": 1,
   "id": "app.gainforest.common.defs",
+  "description": "Shared type definitions for biodiversity and environmental data collection",
   "defs": {
     "uri": {
       "type": "object",
       "required": ["uri"],
-      "description": "Object containing a URI to external data",
+      "description": "Reference to external data via URI",
       "properties": {
         "uri": {
           "type": "string",
           "format": "uri",
           "maxGraphemes": 1024,
-          "description": "URI to external data"
+          "description": "URI to external resource"
         }
       }
     },
+
     "smallBlob": {
       "type": "object",
       "required": ["blob"],
-      "description": "Object containing a blob to external data",
+      "description": "Generic blob up to 10MB (fallback for any file type)",
       "properties": {
         "blob": {
           "type": "blob",
           "accept": ["*/*"],
           "maxSize": 10485760,
-          "description": "Blob to external data (up to 10MB)"
+          "description": "Any file up to 10MB"
         }
       }
     },
     "largeBlob": {
       "type": "object",
       "required": ["blob"],
-      "description": "Object containing a blob to external data",
+      "description": "Generic blob up to 100MB (fallback for any file type)",
       "properties": {
         "blob": {
           "type": "blob",
           "accept": ["*/*"],
           "maxSize": 104857600,
-          "description": "Blob to external data (up to 100MB)"
+          "description": "Any file up to 100MB"
         }
       }
     },
-    "smallImage": {
+
+    "image": {
       "type": "object",
-      "required": ["image"],
-      "description": "Object containing a small image",
+      "required": ["file"],
+      "description": "Image file for photos, camera traps, drone stills, scanned documents",
       "properties": {
-        "image": {
+        "file": {
           "type": "blob",
-          "accept": ["image/jpeg", "image/jpg", "image/png", "image/webp"],
+          "accept": [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "image/webp",
+            "image/heic",
+            "image/heif",
+            "image/tiff",
+            "image/tif",
+            "image/gif",
+            "image/bmp",
+            "image/svg+xml"
+          ],
+          "maxSize": 20971520,
+          "description": "Image up to 20MB. Supports JPEG, PNG, WebP, HEIC (phones), TIFF (scientific), GIF, BMP, SVG."
+        }
+      }
+    },
+    "imageThumbnail": {
+      "type": "object",
+      "required": ["file"],
+      "description": "Small image for thumbnails and previews",
+      "properties": {
+        "file": {
+          "type": "blob",
+          "accept": [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "image/webp"
+          ],
+          "maxSize": 1048576,
+          "description": "Thumbnail image up to 1MB"
+        }
+      }
+    },
+
+    "video": {
+      "type": "object",
+      "required": ["file"],
+      "description": "Video file for camera traps, drone footage, underwater video, behavioral observations",
+      "properties": {
+        "file": {
+          "type": "blob",
+          "accept": [
+            "video/mp4",
+            "video/quicktime",
+            "video/x-msvideo",
+            "video/webm",
+            "video/x-matroska",
+            "video/mpeg",
+            "video/3gpp",
+            "video/3gpp2"
+          ],
+          "maxSize": 104857600,
+          "description": "Video up to 100MB. Supports MP4, MOV, AVI, WebM, MKV, MPEG, 3GP."
+        }
+      }
+    },
+
+    "audio": {
+      "type": "object",
+      "required": ["file"],
+      "description": "Audio file for bioacoustics, soundscapes, field recordings, species calls",
+      "properties": {
+        "file": {
+          "type": "blob",
+          "accept": [
+            "audio/wav",
+            "audio/x-wav",
+            "audio/mpeg",
+            "audio/mp3",
+            "audio/mp4",
+            "audio/x-m4a",
+            "audio/aac",
+            "audio/flac",
+            "audio/x-flac",
+            "audio/ogg",
+            "audio/opus",
+            "audio/webm",
+            "audio/aiff",
+            "audio/x-aiff"
+          ],
+          "maxSize": 104857600,
+          "description": "Audio up to 100MB. Supports WAV, MP3, M4A, AAC, FLAC, OGG, Opus, WebM, AIFF."
+        }
+      }
+    },
+
+    "spectrogram": {
+      "type": "object",
+      "required": ["file"],
+      "description": "Spectrogram image - visual representation of audio frequency content",
+      "properties": {
+        "file": {
+          "type": "blob",
+          "accept": [
+            "image/png",
+            "image/jpeg",
+            "image/jpg",
+            "image/webp"
+          ],
           "maxSize": 5242880,
-          "description": "Image (up to 5MB)"
+          "description": "Spectrogram image up to 5MB"
         }
       }
     },
-    "largeImage": {
+
+    "document": {
       "type": "object",
-      "required": ["image"],
-      "description": "Object containing a large image",
+      "required": ["file"],
+      "description": "Document file for reports, field notes, permits, publications",
       "properties": {
-        "image": {
+        "file": {
           "type": "blob",
-          "accept": ["image/jpeg", "image/jpg", "image/png", "image/webp"],
-          "maxSize": 10485760,
-          "description": "Image (up to 10MB)"
+          "accept": [
+            "application/pdf",
+            "text/plain",
+            "text/markdown",
+            "text/html",
+            "application/rtf",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          ],
+          "maxSize": 20971520,
+          "description": "Document up to 20MB. Supports PDF, TXT, Markdown, HTML, RTF, DOC, DOCX."
         }
       }
     },
+
+    "dataFile": {
+      "type": "object",
+      "required": ["file"],
+      "description": "Structured data file for observations, measurements, exports",
+      "properties": {
+        "file": {
+          "type": "blob",
+          "accept": [
+            "text/csv",
+            "text/tab-separated-values",
+            "application/json",
+            "application/ld+json",
+            "application/xml",
+            "text/xml",
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "application/vnd.oasis.opendocument.spreadsheet"
+          ],
+          "maxSize": 52428800,
+          "description": "Data file up to 50MB. Supports CSV, TSV, JSON, JSON-LD, XML, XLS, XLSX, ODS."
+        }
+      }
+    },
+
+    "gpsTrack": {
+      "type": "object",
+      "required": ["file"],
+      "description": "GPS track file for transects, survey routes, patrol paths",
+      "properties": {
+        "file": {
+          "type": "blob",
+          "accept": [
+            "application/gpx+xml",
+            "application/vnd.google-earth.kml+xml",
+            "application/vnd.google-earth.kmz",
+            "application/geo+json",
+            "application/json"
+          ],
+          "maxSize": 10485760,
+          "description": "GPS track up to 10MB. Supports GPX, KML, KMZ, GeoJSON."
+        }
+      }
+    },
+
+    "geospatial": {
+      "type": "object",
+      "required": ["file"],
+      "description": "Geospatial data file for maps, boundaries, habitat layers",
+      "properties": {
+        "file": {
+          "type": "blob",
+          "accept": [
+            "application/geo+json",
+            "application/json",
+            "application/vnd.google-earth.kml+xml",
+            "application/vnd.google-earth.kmz",
+            "application/geopackage+sqlite3",
+            "application/x-shapefile",
+            "application/zip",
+            "image/tiff",
+            "image/geotiff"
+          ],
+          "maxSize": 104857600,
+          "description": "Geospatial data up to 100MB. Supports GeoJSON, KML, KMZ, GeoPackage, Shapefile (zipped), GeoTIFF."
+        }
+      }
+    },
+
+    "sensorData": {
+      "type": "object",
+      "required": ["file"],
+      "description": "Sensor data file for environmental monitoring (temperature, humidity, light, etc.)",
+      "properties": {
+        "file": {
+          "type": "blob",
+          "accept": [
+            "text/csv",
+            "application/json",
+            "text/plain",
+            "application/x-netcdf",
+            "application/x-hdf5"
+          ],
+          "maxSize": 52428800,
+          "description": "Sensor data up to 50MB. Supports CSV, JSON, TXT, NetCDF, HDF5."
+        }
+      }
+    },
+
+    "geneticData": {
+      "type": "object",
+      "required": ["file"],
+      "description": "Genetic/genomic data file for eDNA, barcoding, sequencing results",
+      "properties": {
+        "file": {
+          "type": "blob",
+          "accept": [
+            "text/x-fasta",
+            "application/x-fasta",
+            "text/x-fastq",
+            "application/x-fastq",
+            "text/plain",
+            "text/csv",
+            "application/json"
+          ],
+          "maxSize": 104857600,
+          "description": "Genetic data up to 100MB. Supports FASTA, FASTQ, CSV, JSON."
+        }
+      }
+    },
+
     "indexedOrganization": {
       "type": "object",
       "required": ["id", "name"],
+      "description": "Reference to an indexed organization",
       "properties": {
         "id": {
           "type": "string",

@@ -423,10 +423,25 @@
             "maxGraphemes": 10000
           },
 
-          "mediaEvidence": {
+          "imageEvidence": {
             "type": "ref",
-            "ref": "app.gainforest.common.defs#smallImage",
-            "description": "Direct image evidence uploaded as ATProto blob (photo of organism, camera trap image, etc.)."
+            "ref": "app.gainforest.common.defs#image",
+            "description": "Image evidence (photo, camera trap, drone still, scanned specimen, etc.)."
+          },
+          "audioEvidence": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#audio",
+            "description": "Audio evidence (bioacoustics, soundscape, species call, field recording, etc.)."
+          },
+          "videoEvidence": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#video",
+            "description": "Video evidence (camera trap, drone footage, underwater video, behavioral observation, etc.)."
+          },
+          "spectrogramEvidence": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#spectrogram",
+            "description": "Spectrogram image showing frequency analysis of audio recording."
           },
 
           "createdAt": {
