@@ -1,12 +1,22 @@
 # ATProto Lexicons
 
-This repository contains ATProto lexicon schemas for the Gainforest ecosystem.
+This repository contains ATProto lexicon schemas for the **Hypersphere ecosystem** - GainForest's AT Protocol infrastructure for environmental impact tracking and decentralized data.
+
+## Hypersphere Ecosystem
+
+| Component | Description | URL |
+|-----------|-------------|-----|
+| **Hypergoat** | AT Protocol AppView - indexes lexicons and exposes them via GraphQL | [hypergoat.vercel.app](https://hypergoat.vercel.app) |
+| **Impact Indexer** | Hypersphere Explorer - real-time visualization and data explorer | [impactindexer.org](https://impactindexer.org) |
+| **Governance** | Feature requests and Lexicon Indexing Requests (LIRs) | [hypersphere-issues](https://github.com/GainForest/hypersphere-issues) |
 
 ## Structure
 
 ```
 lexicons/
   app/
+    bsky/
+      richtext/         # Bluesky richtext facet (for compatibility)
     gainforest/
       common/           # Shared definitions (blobs, images, URIs)
       dwc/              # Darwin Core biodiversity records
@@ -17,6 +27,9 @@ lexicons/
   com/
     atproto/
       repo/             # Standard ATProto references
+  org/
+    impactindexer/
+      review/           # Review system (comments, likes) for AT-Proto entities
   pub/
     leaflet/            # Leaflet document schemas
       blocks/           # Content block types (text, image, code, etc.)
@@ -107,6 +120,22 @@ Leaflet document schemas for structured content authoring:
 
 Standard ATProto strong reference type (`strongRef`).
 
+### `org.impactindexer.review`
+
+Review system for AT-Proto entities, enabling comments and likes on records, users, PDSes, and lexicons. Used by [Impact Indexer](https://impactindexer.org) to provide community feedback and engagement.
+
+| Lexicon | Type | Description |
+|---------|------|-------------|
+| `review.defs` | defs | Shared types: `subjectRef` (URI + type + optional CID), `subjectType` enum (record, user, pds, lexicon) |
+| `review.comment` | record | Text comment on a subject with optional threaded replies |
+| `review.like` | record | Like on a subject (one per user per subject) |
+
+**Subject Types:**
+- `record` - AT-URI of a specific record (`at://did/collection/rkey`)
+- `user` - DID of a user (`did:plc:xxx`)
+- `pds` - Hostname of a PDS (`example.com`)
+- `lexicon` - NSID of a lexicon (`app.bsky.feed.post`)
+
 ## Publishing Lexicons
 
 ### Prerequisites
@@ -145,6 +174,7 @@ goat resolve your-handle.bsky.social
 | `app.gainforest.organization.*` | `_lexicon.organization.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.observations.*` | `_lexicon.observations.organization.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.predictions.*` | `_lexicon.predictions.organization.gainforest.app` | `did=did:plc:xxxxx` |
+| `org.impactindexer.review.*` | `_lexicon.review.impactindexer.org` | `did=did:plc:xxxxx` |
 | `pub.leaflet.blocks.*` | `_lexicon.blocks.leaflet.pub` | `did=did:plc:xxxxx` |
 | `pub.leaflet.pages.*` | `_lexicon.pages.leaflet.pub` | `did=did:plc:xxxxx` |
 | `pub.leaflet.richtext.*` | `_lexicon.richtext.leaflet.pub` | `did=did:plc:xxxxx` |

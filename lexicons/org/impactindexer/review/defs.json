@@ -1,0 +1,35 @@
+{
+  "lexicon": 1,
+  "id": "org.impactindexer.review.defs",
+  "description": "Shared definitions for the Impact Indexer review system.",
+  "defs": {
+    "subjectType": {
+      "type": "string",
+      "maxLength": 32,
+      "knownValues": ["record", "user", "pds", "lexicon"],
+      "description": "The type of subject being reviewed."
+    },
+    "subjectRef": {
+      "type": "object",
+      "description": "Reference to the subject being reviewed.",
+      "required": ["uri", "type"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "maxLength": 8192,
+          "description": "The subject identifier. For records: AT-URI (at://did/collection/rkey). For users: DID (did:plc:xxx). For PDSes: hostname (example.com). For lexicons: NSID (app.bsky.feed.post)."
+        },
+        "type": {
+          "type": "ref",
+          "ref": "#subjectType",
+          "description": "The type of subject."
+        },
+        "cid": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Optional CID for record subjects to pin to a specific version."
+        }
+      }
+    }
+  }
+}
