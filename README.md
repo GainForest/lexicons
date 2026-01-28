@@ -1,13 +1,15 @@
 # ATProto Lexicons
 
-This repository contains ATProto lexicon schemas for the **Hypersphere ecosystem** - GainForest's AT Protocol infrastructure for environmental impact tracking and decentralized data.
+This repository contains ATProto lexicon schemas developed by GainForest for environmental impact tracking, biodiversity data, and decentralized public goods.
 
-## Hypersphere Ecosystem
+These lexicons are part of the broader **Hypersphere ecosystem** - an open AT Protocol infrastructure for impact data.
+
+## Related Services
 
 | Component | Description | URL |
 |-----------|-------------|-----|
 | **Hypergoat** | AT Protocol AppView - indexes lexicons and exposes them via GraphQL | [hypergoat.vercel.app](https://hypergoat.vercel.app) |
-| **Impact Indexer** | Hypersphere Explorer - real-time visualization and data explorer | [impactindexer.org](https://impactindexer.org) |
+| **Impact Indexer** | Data explorer and real-time visualization | [impactindexer.org](https://impactindexer.org) |
 | **Governance** | Feature requests and Lexicon Indexing Requests (LIRs) | [hypersphere-issues](https://github.com/GainForest/hypersphere-issues) |
 
 ## Structure
