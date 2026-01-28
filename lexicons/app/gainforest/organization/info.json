@@ -25,25 +25,23 @@
             "maxLength": 255
           },
           "shortDescription": {
-            "type": "string",
-            "description": "The description of the organization or project",
-            "minLength": 50,
-            "maxLength": 2000
+            "type": "ref",
+            "ref": "app.bsky.richtext.facet",
+            "description": "The description of the organization or project"
           },
           "longDescription": {
-            "type": "string",
-            "description": "The long description of the organization or project in richtext",
-            "minLength": 50,
-            "maxLength": 5000
+            "type": "ref",
+            "ref": "pub.leaflet.pages.linearDocument",
+            "description": "The long description of the organization or project in richtext"
           },
           "coverImage": {
             "type": "ref",
-            "ref": "app.gainforest.common.defs#smallImage",
+            "ref": "org.hypercerts.defs#smallImage",
             "description": "Cover image for the organization"
           },
           "logo": {
             "type": "ref",
-            "ref": "app.gainforest.common.defs#smallImage",
+            "ref": "org.hypercerts.defs#smallImage",
             "description": "Logo for the organization"
           },
           "objectives": {
@@ -77,7 +75,7 @@
           "visibility": {
             "type": "string",
             "description": "The visibility of the organization or project in the Green Globe",
-            "enum": ["Public", "Hidden"]
+            "enum": ["Public", "Unlisted"]
           },
           "createdAt": {
             "type": "string",

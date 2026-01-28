@@ -12,7 +12,7 @@
         "properties": {
           "shapefile": {
             "type": "ref",
-            "ref": "app.gainforest.common.defs#smallBlob",
+            "ref": "org.hypercerts.defs#smallBlob",
             "description": "A blob pointing to a shapefile of the measured trees cluster"
           },
           "createdAt": {

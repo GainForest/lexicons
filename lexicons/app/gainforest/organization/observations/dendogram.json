@@ -12,7 +12,7 @@
         "properties": {
           "dendogram": {
             "type": "ref",
-            "ref": "app.gainforest.common.defs#smallBlob",
+            "ref": "org.hypercerts.defs#smallBlob",
             "description": "An SVG of the dendogram uploaded as blob"
           },
           "createdAt": {

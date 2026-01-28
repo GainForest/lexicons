@@ -17,33 +17,6 @@
       }
     },
 
-    "smallBlob": {
-      "type": "object",
-      "required": ["blob"],
-      "description": "Generic blob up to 10MB (fallback for any file type)",
-      "properties": {
-        "blob": {
-          "type": "blob",
-          "accept": ["*/*"],
-          "maxSize": 10485760,
-          "description": "Any file up to 10MB"
-        }
-      }
-    },
-    "largeBlob": {
-      "type": "object",
-      "required": ["blob"],
-      "description": "Generic blob up to 100MB (fallback for any file type)",
-      "properties": {
-        "blob": {
-          "type": "blob",
-          "accept": ["*/*"],
-          "maxSize": 104857600,
-          "description": "Any file up to 100MB"
-        }
-      }
-    },
-
     "image": {
       "type": "object",
       "required": ["file"],
