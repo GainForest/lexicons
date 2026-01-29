@@ -10,7 +10,7 @@ These lexicons are part of the broader **Hypersphere ecosystem** - an open AT Pr
 |-----------|-------------|-----|
 | **Hypergoat** | AT Protocol AppView - indexes lexicons and exposes them via GraphQL | [hypergoat.vercel.app](https://hypergoat.vercel.app) |
 | **Impact Indexer** | Data explorer and real-time visualization | [impactindexer.org](https://impactindexer.org) |
-| **Governance** | Feature requests and Lexicon Indexing Requests (LIRs) | [hypersphere-issues](https://github.com/GainForest/hypersphere-issues) |
+| **Governance** | Feature requests and Lexicon Indexing Requests (LIRs) | [hypercollective](https://tangled.org/gainforest.earth/hypercollective) |
 
 ## Structure
 
