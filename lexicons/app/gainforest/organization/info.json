@@ -68,6 +68,14 @@
             "description": "The website of the organization or project",
             "format": "uri"
           },
+          "socialMediaLinks": {
+            "type": "array",
+            "items": {
+              "type": "ref",
+              "ref": "#socialMediaLink"
+            },
+            "description": "The social media links of the organization or project"
+          },
           "country": {
             "type": "string",
             "description": "The country of the organization or project in two letter code (ISO 3166-1 alpha-2)"
@@ -82,6 +90,22 @@
             "description": "The date and time of the creation of the record",
             "format": "datetime"
           }
+        }
+      }
+    },
+    "socialMediaLink": {
+      "type": "object",
+      "description": "A social media link for the organization",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "knownValues": ["Instagram", "Facebook", "LinkedIn", "YouTube", "TikTok", "X", "Threads", "Reddit", "Telegram", "Discord", "Snapchat", "Pinterest", "Medium", "Substack", "Bluesky", "Mastodon"],
+          "description": "The platform of the social media link"
+        },
+        "url": {
+          "type": "string",
+          "description": "The URL of the social media link",
+          "format": "uri"
         }
       }
     }
