@@ -45,6 +45,7 @@ lexicons/
 
 Shared type definitions used across other lexicons:
 
+- `richtext` - Rich text object with text and optional facets for formatting
 - `uri` - Object containing a URI reference
 - `smallBlob` / `largeBlob` - Generic blob references (10MB / 100MB)
 - `smallImage` / `largeImage` - Image blobs (5MB / 10MB, JPEG/PNG/WebP)

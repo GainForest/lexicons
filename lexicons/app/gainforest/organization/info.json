@@ -26,7 +26,7 @@
           },
           "shortDescription": {
             "type": "ref",
-            "ref": "app.bsky.richtext.facet",
+            "ref": "app.gainforest.common.defs#richtext",
             "description": "The description of the organization or project"
           },
           "longDescription": {

@@ -3,6 +3,26 @@
   "id": "app.gainforest.common.defs",
   "description": "Shared type definitions for biodiversity and environmental data collection",
   "defs": {
+
+    "richtext": {
+      "type": "object",
+      "required": ["text"],
+      "description": "An object that contains the text and an object that defins and enables richtext formatting on the text.",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The text to be formatted"
+        },
+        "facets": {
+          "type": "array",
+          "items": {
+            "type": "ref",
+            "ref": "app.bsky.richtext.facet"
+          }
+        }
+      }
+    },
+    
     "uri": {
       "type": "object",
       "required": ["uri"],
