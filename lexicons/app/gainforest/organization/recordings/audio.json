@@ -10,6 +10,15 @@
         "type": "object",
         "required": ["audioBlob", "metadata", "createdAt"],
         "properties": {
+            "name": {
+                "type": "string",
+                "description": "A short name for the audio recording"
+            },
+            "description": {
+                "type": "ref",
+                "ref": "app.gainforest.common.defs#richtext",
+                "description": "A description of the audio recording"
+            },
           "audioBlob": {
             "type": "ref",
             "ref": "app.gainforest.common.defs#audio",
