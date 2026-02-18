@@ -8,18 +8,23 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["audioBlob", "metadata", "createdAt"],
+        "required": [
+          "name",
+          "blob",
+          "metadata",
+          "createdAt"
+        ],
         "properties": {
-            "name": {
-                "type": "string",
-                "description": "A short name for the audio recording"
-            },
-            "description": {
-                "type": "ref",
-                "ref": "app.gainforest.common.defs#richtext",
-                "description": "A description of the audio recording"
-            },
-          "audioBlob": {
+          "name": {
+            "type": "string",
+            "description": "A short name for the audio recording"
+          },
+          "description": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#richtext",
+            "description": "A description of the audio recording"
+          },
+          "blob": {
             "type": "ref",
             "ref": "app.gainforest.common.defs#audio",
             "description": "The blob of the audio recording"
@@ -38,40 +43,41 @@
       }
     },
     "metadata": {
-        "type": "object",
-        "required": ["codec", "format", "channels", "duration", "recordedAt", "sampleRate"],
-        "properties": {
-            "codec": {
-                "type": "string",
-                "description": "The codec of the audio recording"
-            },
-            "format": {
-                "type": "string",
-                "description": "The format of the audio recording",
-                "enum": ["wav", "mp3", "m4a", "aac", "flac", "ogg", "opus", "webm", "aiff"]
-            },
-            "channels": {
-                "type": "integer",
-                "description": "The number of channels of the audio recording"
-            },
-            "duration": {
-                "type": "string",
-                "description": "The duration of the audio recording in seconds"
-            },
-            "recordedAt": {
-                "type": "string",
-                "description": "The date and time of the recording",
-                "format": "datetime"
-            },
-            "sampleRate": {
-                "type": "integer",
-                "description": "The sample rate of the audio recording"
-            },
-            "coordinates": {
-                "type": "string",
-                "description": "The coordinates at which the audio was recorded in the format 'latitude,longitude' OR 'latitude,longitude,altitude'"
-            }
+      "type": "object",
+      "required": [
+        "codec",
+        "channels",
+        "duration",
+        "recordedAt",
+        "sampleRate"
+      ],
+      "properties": {
+        "codec": {
+          "type": "string",
+          "description": "The codec of the audio recording"
+        },
+        "channels": {
+          "type": "integer",
+          "description": "The number of channels of the audio recording"
+        },
+        "duration": {
+          "type": "string",
+          "description": "The duration of the audio recording in seconds"
+        },
+        "recordedAt": {
+          "type": "string",
+          "description": "The date and time of the recording",
+          "format": "datetime"
+        },
+        "sampleRate": {
+          "type": "integer",
+          "description": "The sample rate of the audio recording"
+        },
+        "coordinates": {
+          "type": "string",
+          "description": "The coordinates at which the audio was recorded in the format 'latitude,longitude' OR 'latitude,longitude,altitude'"
         }
+      }
     }
   }
 }
