@@ -81,7 +81,150 @@
             "type": "string",
             "description": "The date and time of the creation of the record",
             "format": "datetime"
+          },
+          "email": {
+            "type": "string",
+            "description": "Contact email for the organization",
+            "maxGraphemes": 256
+          },
+          "socialLinks": {
+            "type": "array",
+            "description": "Social media links for the organization",
+            "maxLength": 10,
+            "items": {
+              "type": "ref",
+              "ref": "#socialLink"
+            }
+          },
+          "discordId": {
+            "type": "string",
+            "description": "Discord server ID for the organization",
+            "maxGraphemes": 64
+          },
+          "stripeUrl": {
+            "type": "string",
+            "description": "Donation link for the organization",
+            "format": "uri",
+            "maxGraphemes": 512
+          },
+          "teamSize": {
+            "type": "integer",
+            "description": "Number of team members in the organization",
+            "minimum": 1
+          },
+          "foundedYear": {
+            "type": "integer",
+            "description": "Year the organization was founded",
+            "minimum": 1900,
+            "maximum": 2100
+          },
+          "ecosystemTypes": {
+            "type": "array",
+            "description": "Types of ecosystems the organization works in",
+            "maxLength": 10,
+            "items": {
+              "type": "string",
+              "maxGraphemes": 128,
+              "knownValues": [
+                "tropical-rainforest",
+                "temperate-forest",
+                "boreal-forest",
+                "mangrove",
+                "coral-reef",
+                "savanna",
+                "grassland",
+                "wetland",
+                "desert",
+                "alpine",
+                "marine",
+                "freshwater",
+                "urban",
+                "agroforestry",
+                "other"
+              ]
+            }
+          },
+          "focusSpeciesGroups": {
+            "type": "array",
+            "description": "Species groups the organization focuses on",
+            "maxLength": 20,
+            "items": {
+              "type": "string",
+              "maxGraphemes": 64,
+              "knownValues": [
+                "mammals",
+                "birds",
+                "reptiles",
+                "amphibians",
+                "fish",
+                "insects",
+                "arachnids",
+                "mollusks",
+                "crustaceans",
+                "trees",
+                "shrubs",
+                "herbs",
+                "grasses",
+                "ferns",
+                "mosses",
+                "fungi",
+                "algae",
+                "coral",
+                "other"
+              ]
+            }
+          },
+          "dataLicense": {
+            "type": "string",
+            "description": "Default license for data published by the organization",
+            "maxGraphemes": 256
+          },
+          "dataDownloadUrl": {
+            "type": "string",
+            "description": "URL to download the organization's data",
+            "format": "uri",
+            "maxGraphemes": 512
+          },
+          "dataDownloadInfo": {
+            "type": "string",
+            "description": "Description of available data downloads",
+            "maxGraphemes": 1024
+          },
+          "fundingSourcesDescription": {
+            "type": "string",
+            "description": "Description of the organization's funding sources",
+            "maxGraphemes": 2048
           }
+        }
+      }
+    },
+    "socialLink": {
+      "type": "object",
+      "description": "A social media link for an organization",
+      "required": ["platform", "url"],
+      "properties": {
+        "platform": {
+          "type": "string",
+          "description": "The social media platform",
+          "maxGraphemes": 64,
+          "knownValues": [
+            "twitter",
+            "instagram",
+            "facebook",
+            "linkedin",
+            "youtube",
+            "tiktok",
+            "github",
+            "discord",
+            "telegram",
+            "other"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "description": "The URL of the social media profile or page",
+          "format": "uri",
+          "maxGraphemes": 512
         }
       }
     }

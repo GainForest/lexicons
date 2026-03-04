@@ -448,6 +448,50 @@
             "type": "string",
             "format": "datetime",
             "description": "Timestamp of record creation in the ATProto PDS."
+          },
+
+          "conservationStatus": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#conservationStatus",
+            "description": "Conservation status information including IUCN category, CITES listing, and native/invasive status."
+          },
+
+          "plantTraits": {
+            "type": "ref",
+            "ref": "app.gainforest.dwc.defs#plantTraits",
+            "description": "Functional plant traits from databases like TRY and Restor. Only applicable to flora occurrences."
+          },
+
+          "projectRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI reference to the organization info record for the project this occurrence belongs to."
+          },
+          "siteRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI reference to the site record where this occurrence was observed."
+          },
+          "monitoringProgramme": {
+            "type": "string",
+            "description": "Name of the monitoring programme under which this occurrence was recorded.",
+            "maxGraphemes": 256
+          },
+          "datasetRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI reference to a dataset record this occurrence belongs to."
+          },
+
+          "thumbnailUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to a thumbnail image for display in lists and cards."
+          },
+          "speciesImageUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to a representative species image."
           }
         }
       }

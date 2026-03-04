@@ -299,6 +299,162 @@
           "description": "The name of the organization"
         }
       }
+    },
+
+    "conservationStatus": {
+      "type": "object",
+      "description": "IUCN and other conservation status information for a species or population",
+      "properties": {
+        "iucnCategory": {
+          "type": "string",
+          "maxGraphemes": 16,
+          "knownValues": ["EX", "EW", "CR", "EN", "VU", "NT", "LC", "DD", "NE"],
+          "description": "IUCN Red List category code"
+        },
+        "iucnTaxonId": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "IUCN taxon identifier"
+        },
+        "iucnAssessmentDate": {
+          "type": "string",
+          "maxGraphemes": 64,
+          "description": "Date of the IUCN assessment"
+        },
+        "citesAppendix": {
+          "type": "string",
+          "maxGraphemes": 8,
+          "knownValues": ["I", "II", "III"],
+          "description": "CITES appendix listing"
+        },
+        "nationalStatus": {
+          "type": "string",
+          "maxGraphemes": 256,
+          "description": "National or regional conservation status"
+        },
+        "nativeStatus": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "knownValues": ["native", "invasive", "introduced", "endemic", "uncertain"],
+          "description": "Native status of the species in the observed region"
+        }
+      }
+    },
+
+    "speciesProfile": {
+      "type": "object",
+      "required": ["scientificName"],
+      "description": "Display-ready species profile for UI rendering",
+      "properties": {
+        "scientificName": {
+          "type": "string",
+          "maxGraphemes": 512,
+          "description": "Scientific (Latin) name of the species"
+        },
+        "commonName": {
+          "type": "string",
+          "maxGraphemes": 256,
+          "description": "Vernacular name of the species"
+        },
+        "gbifTaxonKey": {
+          "type": "string",
+          "maxGraphemes": 64,
+          "description": "GBIF taxon key identifier"
+        },
+        "kingdom": {
+          "type": "string",
+          "maxGraphemes": 128,
+          "description": "Taxonomic kingdom"
+        },
+        "family": {
+          "type": "string",
+          "maxGraphemes": 128,
+          "description": "Taxonomic family"
+        },
+        "genus": {
+          "type": "string",
+          "maxGraphemes": 128,
+          "description": "Taxonomic genus"
+        },
+        "imageUrl": {
+          "type": "string",
+          "format": "uri",
+          "maxGraphemes": 512,
+          "description": "Representative species image URL"
+        },
+        "thumbnailUrl": {
+          "type": "string",
+          "format": "uri",
+          "maxGraphemes": 512,
+          "description": "Small thumbnail image URL"
+        },
+        "conservationStatus": {
+          "type": "ref",
+          "ref": "#conservationStatus",
+          "description": "Conservation status information for this species"
+        }
+      }
+    },
+
+    "coordinatePair": {
+      "type": "object",
+      "required": ["lat", "lon"],
+      "description": "A simple lat/lon pair for lightweight location references",
+      "properties": {
+        "lat": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Decimal latitude"
+        },
+        "lon": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Decimal longitude"
+        }
+      }
+    },
+
+    "dateRange": {
+      "type": "object",
+      "required": ["startDate"],
+      "description": "A date range for temporal queries",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "maxGraphemes": 64,
+          "description": "ISO 8601 start date"
+        },
+        "endDate": {
+          "type": "string",
+          "maxGraphemes": 64,
+          "description": "ISO 8601 end date"
+        }
+      }
+    },
+
+    "externalReference": {
+      "type": "object",
+      "required": ["system", "identifier"],
+      "description": "A reference to an external system or database",
+      "properties": {
+        "system": {
+          "type": "string",
+          "maxGraphemes": 128,
+          "knownValues": ["gbif", "iucn", "ncbi", "bold", "ebird", "inaturalist", "wdpa", "restor", "other"],
+          "description": "External system name"
+        },
+        "identifier": {
+          "type": "string",
+          "maxGraphemes": 256,
+          "description": "Identifier in the external system"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "maxGraphemes": 512,
+          "description": "Direct URL to the record in the external system"
+        }
+      }
     }
   }
 }
