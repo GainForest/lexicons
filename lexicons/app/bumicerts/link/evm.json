@@ -1,0 +1,123 @@
+{
+  "lexicon": 1,
+  "id": "app.bumicerts.link.evm",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A verifiable link between an ATProto DID and an EVM wallet address, with platform attestation. The user proves wallet ownership via EIP-712 signature, and the platform co-signs to attest the linking occurred through a trusted service.",
+      "key": "any",
+      "record": {
+        "type": "object",
+        "required": ["address", "userProof", "platformAttestation", "createdAt"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Optional user-defined name for this wallet link (e.g. 'Personal Wallet', 'Project Treasury'). Helps users identify which wallet this record represents when they have multiple linked wallets.",
+            "maxLength": 100
+          },
+          "address": {
+            "type": "string",
+            "description": "EVM wallet address (0x-prefixed, checksummed).",
+            "minLength": 42,
+            "maxLength": 42
+          },
+          "userProof": {
+            "type": "union",
+            "refs": ["#eip712Proof"],
+            "description": "User's cryptographic proof of wallet ownership. Open union to support future signature methods (ERC-1271, ERC-6492)."
+          },
+          "platformAttestation": {
+            "type": "union",
+            "refs": ["#eip712PlatformAttestation"],
+            "description": "Platform's co-signature attesting that this link was created through the trusted service. Open union to support future attestation methods."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Client-declared timestamp when this record was originally created."
+          }
+        }
+      }
+    },
+    "eip712Proof": {
+      "type": "object",
+      "description": "EOA wallet ownership proof via EIP-712 typed data signature.",
+      "required": ["signature", "message"],
+      "properties": {
+        "signature": {
+          "type": "string",
+          "description": "User's ECDSA signature over the EIP-712 hash (hex-encoded with 0x prefix, 64 or 65 bytes).",
+          "minLength": 130,
+          "maxLength": 132
+        },
+        "message": {
+          "type": "ref",
+          "ref": "#eip712Message",
+          "description": "The EIP-712 structured message fields that were signed."
+        }
+      }
+    },
+    "eip712Message": {
+      "type": "object",
+      "description": "The EIP-712 typed data message signed by the user's wallet.",
+      "required": ["did", "evmAddress", "chainId", "timestamp", "nonce"],
+      "properties": {
+        "did": {
+          "type": "string",
+          "format": "did",
+          "description": "The ATProto DID being linked to the EVM address.",
+          "maxLength": 256
+        },
+        "evmAddress": {
+          "type": "string",
+          "description": "The EVM wallet address (must match the top-level address field).",
+          "minLength": 42,
+          "maxLength": 42
+        },
+        "chainId": {
+          "type": "string",
+          "description": "EVM chain ID as string (bigint serialized). The EIP-712 domain is chain-specific; verifiers should treat this attestation as valid only for the specified chain.",
+          "minLength": 1,
+          "maxLength": 78
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Unix timestamp when the attestation was created (bigint serialized).",
+          "minLength": 1,
+          "maxLength": 78
+        },
+        "nonce": {
+          "type": "string",
+          "description": "Replay-protection nonce (bigint serialized).",
+          "minLength": 1,
+          "maxLength": 78
+        }
+      }
+    },
+    "eip712PlatformAttestation": {
+      "type": "object",
+      "description": "Platform's EIP-712 attestation that this DID-wallet link was created through a trusted service. The platform signs over the user's signature to bind its attestation to the specific linking event.",
+      "required": ["signature", "platformAddress", "signedData"],
+      "properties": {
+        "signature": {
+          "type": "string",
+          "description": "Platform's ECDSA signature over the signedData (hex-encoded with 0x prefix, 64 or 65 bytes).",
+          "minLength": 130,
+          "maxLength": 132
+        },
+        "platformAddress": {
+          "type": "string",
+          "description": "The platform's signing wallet address (0x-prefixed). Verifiers should check this against known/trusted platform addresses.",
+          "minLength": 42,
+          "maxLength": 42
+        },
+        "signedData": {
+          "type": "string",
+          "description": "The user's signature that the platform signed over (hex-encoded with 0x prefix). This binds the platform attestation to the specific user proof.",
+          "minLength": 130,
+          "maxLength": 132
+        }
+      }
+    }
+  }
+}

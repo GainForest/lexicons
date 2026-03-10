@@ -1,0 +1,69 @@
+{
+    "lexicon": 1,
+    "id": "app.bumicerts.funding.config",
+    "description": "A record that represents the funding / donations configuration for a given bumicert.",
+    "defs": {
+        "evmLinkRef": {
+            "type": "object",
+            "description": "Reference to an EVM wallet link record (app.bumicerts.link.evm).",
+            "required": ["uri"],
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "format": "at-uri",
+                    "description": "AT-URI of the app.bumicerts.link.evm record."
+                }
+            }
+        },
+        "main": {
+            "type": "record",
+            "description": "The funding / donations configuration for a given bumicert.",
+            "key": "any",
+            "record": {
+                "type": "object",
+                "required": [
+                    "receivingWallet",
+                    "createdAt",
+                    "updatedAt"
+                ],
+                "properties": {
+                    "receivingWallet": {
+                        "type": "union",
+                        "refs": ["#evmLinkRef"],
+                        "description": "Reference to the wallet link record where funds should be received. Open union to support future wallet types (e.g. Solana, Cosmos)."
+                    },
+                    "goalInUSD": {
+                        "type": "string",
+                        "description": "An optional field to set a fundraising goal in USD (e.g. '1000.50').",
+                        "maxLength": 50
+                    },
+                    "allowOversell": {
+                        "type": "boolean",
+                        "description": "An optional field to determine if donations are accepted post the goal reach. Defaults to true (overselling is allowed).",
+                        "default": true
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The current status of the listing. Defaults to 'open'.",
+                        "knownValues": [
+                            "coming-soon",
+                            "open",
+                            "paused",
+                            "closed"
+                        ]
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "datetime",
+                        "description": "Client-declared timestamp when this record was last updated."
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "datetime",
+                        "description": "Client-declared timestamp when this record was originally created."
+                    }
+                }
+            }
+        }
+    }
+}
