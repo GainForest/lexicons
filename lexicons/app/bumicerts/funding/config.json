@@ -1,12 +1,14 @@
 {
     "lexicon": 1,
     "id": "app.bumicerts.funding.config",
-    "description": "A record that represents the funding / donations configuration for a given bumicert.",
+    "description": "A record that represents the funding / donations configuration for a given bumicert. It shares the same rkey as the claim.activity (bumicert) record.",
     "defs": {
         "evmLinkRef": {
             "type": "object",
             "description": "Reference to an EVM wallet link record (app.bumicerts.link.evm).",
-            "required": ["uri"],
+            "required": [
+                "uri"
+            ],
             "properties": {
                 "uri": {
                     "type": "string",
@@ -29,12 +31,24 @@
                 "properties": {
                     "receivingWallet": {
                         "type": "union",
-                        "refs": ["#evmLinkRef"],
+                        "refs": [
+                            "#evmLinkRef"
+                        ],
                         "description": "Reference to the wallet link record where funds should be received. Open union to support future wallet types (e.g. Solana, Cosmos)."
                     },
                     "goalInUSD": {
                         "type": "string",
                         "description": "An optional field to set a fundraising goal in USD (e.g. '1000.50').",
+                        "maxLength": 50
+                    },
+                    "minDonationInUSD": {
+                        "type": "string",
+                        "description": "Optional minimum donation amount in USD (e.g. '1.00'). Donations below this amount will be rejected.",
+                        "maxLength": 50
+                    },
+                    "maxDonationInUSD": {
+                        "type": "string",
+                        "description": "Optional maximum donation amount in USD (e.g. '10000.00'). Donations above this amount will be rejected.",
                         "maxLength": 50
                     },
                     "allowOversell": {
