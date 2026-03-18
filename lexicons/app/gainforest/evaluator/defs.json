@@ -260,6 +260,164 @@
           "description": "Additional notes about the measurements."
         }
       }
+    },
+    "bioacousticsDetection": {
+      "type": "object",
+      "description": "A single detection within an audio recording.",
+      "required": ["startTimeSeconds", "endTimeSeconds"],
+      "properties": {
+        "startTimeSeconds": {
+          "type": "string",
+          "maxGraphemes": 16,
+          "description": "Start time in seconds from recording start."
+        },
+        "endTimeSeconds": {
+          "type": "string",
+          "maxGraphemes": 16,
+          "description": "End time in seconds from recording start."
+        },
+        "minFrequencyHz": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Lower frequency bound of detection in Hz."
+        },
+        "maxFrequencyHz": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Upper frequency bound of detection in Hz."
+        },
+        "scientificName": {
+          "type": "string",
+          "maxGraphemes": 512,
+          "description": "Identified species scientific name."
+        },
+        "commonName": {
+          "type": "string",
+          "maxGraphemes": 256,
+          "description": "Common name of the identified species."
+        },
+        "confidence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000,
+          "description": "Confidence score (0-1000, where 1000 = 100.0%)."
+        },
+        "soundType": {
+          "type": "string",
+          "maxGraphemes": 64,
+          "knownValues": ["call", "song", "alarm", "drumming", "echolocation", "stridulation", "anthropogenic", "geophony", "unknown"],
+          "description": "Type of sound detected."
+        }
+      }
+    },
+    "bioacousticsResult": {
+      "type": "object",
+      "description": "Result of audio-based species detection.",
+      "required": ["detections"],
+      "properties": {
+        "detections": {
+          "type": "array",
+          "items": { "type": "ref", "ref": "#bioacousticsDetection" },
+          "maxLength": 100,
+          "description": "Detected species/sounds within the audio recording."
+        },
+        "totalDurationAnalyzedSeconds": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Total audio duration analyzed in seconds."
+        },
+        "soundscapeIndex": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Acoustic diversity index value."
+        },
+        "remarks": {
+          "type": "string",
+          "maxGraphemes": 2048,
+          "description": "Additional notes about the bioacoustics analysis."
+        }
+      }
+    },
+    "deforestationResult": {
+      "type": "object",
+      "description": "Deforestation/land-use change detection result.",
+      "required": ["changeType"],
+      "properties": {
+        "changeType": {
+          "type": "string",
+          "maxGraphemes": 64,
+          "knownValues": ["deforestation", "degradation", "reforestation", "afforestation", "no-change", "fire", "flooding", "urbanization"],
+          "description": "Type of land-use change detected."
+        },
+        "areaAffectedHectares": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Area affected by the change in hectares."
+        },
+        "changePercentage": {
+          "type": "string",
+          "maxGraphemes": 16,
+          "description": "Percentage of monitored area affected."
+        },
+        "detectionDate": {
+          "type": "string",
+          "maxGraphemes": 64,
+          "description": "ISO 8601 date of detection."
+        },
+        "baselineDate": {
+          "type": "string",
+          "maxGraphemes": 64,
+          "description": "ISO 8601 date of baseline comparison."
+        },
+        "satelliteSource": {
+          "type": "string",
+          "maxGraphemes": 128,
+          "description": "Satellite data source (e.g., 'Sentinel-2', 'Landsat-8', 'Planet')."
+        },
+        "remarks": {
+          "type": "string",
+          "maxGraphemes": 2048,
+          "description": "Additional notes about the deforestation detection."
+        }
+      }
+    },
+    "carbonEstimationResult": {
+      "type": "object",
+      "description": "Carbon stock or sequestration estimation.",
+      "required": ["estimationType", "value", "unit"],
+      "properties": {
+        "estimationType": {
+          "type": "string",
+          "maxGraphemes": 64,
+          "knownValues": ["above-ground-biomass", "below-ground-biomass", "soil-carbon", "total-carbon-stock", "annual-sequestration", "avoided-emissions"],
+          "description": "Type of carbon estimation."
+        },
+        "value": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Estimated carbon value."
+        },
+        "unit": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Unit of the estimated value (e.g., 'tCO2e', 'tC/ha', 'tCO2e/year')."
+        },
+        "uncertainty": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Uncertainty range (e.g., '±15%')."
+        },
+        "methodology": {
+          "type": "string",
+          "maxGraphemes": 512,
+          "description": "Estimation methodology used."
+        },
+        "remarks": {
+          "type": "string",
+          "maxGraphemes": 2048,
+          "description": "Additional notes about the carbon estimation."
+        }
+      }
     }
   }
 }

@@ -35,7 +35,10 @@
               "app.gainforest.evaluator.defs#dataQualityResult",
               "app.gainforest.evaluator.defs#verificationResult",
               "app.gainforest.evaluator.defs#classificationResult",
-              "app.gainforest.evaluator.defs#measurementResult"
+              "app.gainforest.evaluator.defs#measurementResult",
+              "app.gainforest.evaluator.defs#bioacousticsResult",
+              "app.gainforest.evaluator.defs#deforestationResult",
+              "app.gainforest.evaluator.defs#carbonEstimationResult"
             ]
           },
           "confidence": {

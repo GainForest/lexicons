@@ -9,8 +9,23 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["basisOfRecord", "scientificName", "eventDate", "createdAt"],
+        "required": [
+          "basisOfRecord",
+          "scientificName",
+          "eventDate",
+          "createdAt"
+        ],
         "properties": {
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "A keyword / tag for the occurrence record.",
+              "minGraphemes": 1,
+              "maxGraphemes": 64
+            },
+            "description": "Keywords / tags for the occurrence record."
+          },
           "occurrenceID": {
             "type": "string",
             "description": "A globally unique identifier for the occurrence record. Recommended: a persistent URI (e.g., DOI, LSID, or UUID-based URI).",
@@ -85,7 +100,6 @@
             "format": "uri",
             "description": "A related resource that is referenced, cited, or otherwise pointed to by the record (URL)."
           },
-
           "recordedBy": {
             "type": "string",
             "description": "Person(s) responsible for recording the occurrence in the field. Pipe-delimited for multiple (e.g., 'Jane Smith | John Doe').",
@@ -115,7 +129,11 @@
             "type": "string",
             "description": "The sex of the biological individual(s).",
             "maxGraphemes": 64,
-            "enum": ["male", "female", "hermaphrodite"]
+            "enum": [
+              "male",
+              "female",
+              "hermaphrodite"
+            ]
           },
           "lifeStage": {
             "type": "string",
@@ -136,7 +154,10 @@
             "type": "string",
             "description": "Statement about the presence or absence of a taxon at a location.",
             "maxGraphemes": 64,
-            "enum": ["present", "absent"]
+            "enum": [
+              "present",
+              "absent"
+            ]
           },
           "occurrenceRemarks": {
             "type": "string",
@@ -163,7 +184,6 @@
             "description": "Identifiers of other occurrences associated with this one (e.g., parasite-host). Pipe-delimited.",
             "maxGraphemes": 2048
           },
-
           "eventID": {
             "type": "string",
             "description": "Identifier for the sampling event. Can be used to group occurrences from the same event.",
@@ -204,7 +224,6 @@
             "description": "Notes or reference to notes taken in the field about the event.",
             "maxGraphemes": 10000
           },
-
           "locationID": {
             "type": "string",
             "description": "Identifier for the location (e.g., a reference to a named site).",
@@ -289,7 +308,6 @@
             "description": "Comments about the location.",
             "maxGraphemes": 2048
           },
-
           "gbifTaxonKey": {
             "type": "string",
             "description": "GBIF backbone taxonomy key for the identified taxon. Retained for backward compatibility with existing GainForest workflows.",
@@ -378,14 +396,19 @@
             "type": "string",
             "description": "The nomenclatural code under which the scientificName is constructed.",
             "maxGraphemes": 64,
-            "enum": ["ICZN", "ICN", "ICNP", "ICTV", "BioCode"]
+            "enum": [
+              "ICZN",
+              "ICN",
+              "ICNP",
+              "ICTV",
+              "BioCode"
+            ]
           },
           "higherClassification": {
             "type": "string",
             "description": "A complete list of taxa names terminating at the rank immediately superior to the taxon. Pipe-delimited (e.g., 'Animalia|Chordata|Mammalia|Rodentia|Ctenomyidae|Ctenomys').",
             "maxGraphemes": 1024
           },
-
           "identifiedBy": {
             "type": "string",
             "description": "Person(s) who assigned the taxon to the occurrence. Pipe-delimited for multiple.",
@@ -416,13 +439,11 @@
             "description": "Previous assignments of names to the occurrence. Pipe-delimited.",
             "maxGraphemes": 2048
           },
-
           "dynamicProperties": {
             "type": "string",
             "description": "Additional structured data as a valid JSON string (per Simple DwC Section 7.1). Example: '{\"iucnStatus\":\"vulnerable\",\"canopyCover\":\"85%\"}'. Should be flattened to a single line with no non-printing characters.",
             "maxGraphemes": 10000
           },
-
           "imageEvidence": {
             "type": "ref",
             "ref": "app.gainforest.common.defs#image",
@@ -443,11 +464,50 @@
             "ref": "app.gainforest.common.defs#spectrogram",
             "description": "Spectrogram image showing frequency analysis of audio recording."
           },
-
           "createdAt": {
             "type": "string",
             "format": "datetime",
             "description": "Timestamp of record creation in the ATProto PDS."
+          },
+          "conservationStatus": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#conservationStatus",
+            "description": "Conservation status information including IUCN category, CITES listing, and native/invasive status."
+          },
+          "plantTraits": {
+            "type": "ref",
+            "ref": "app.gainforest.dwc.defs#plantTraits",
+            "description": "Functional plant traits from databases like TRY and Restor. Only applicable to flora occurrences."
+          },
+          "projectRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI reference to the organization info record for the project this occurrence belongs to."
+          },
+          "siteRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI reference to the site record where this occurrence was observed."
+          },
+          "monitoringProgramme": {
+            "type": "string",
+            "description": "Name of the monitoring programme under which this occurrence was recorded.",
+            "maxGraphemes": 256
+          },
+          "datasetRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI reference to a dataset record this occurrence belongs to."
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to a thumbnail image for display in lists and cards."
+          },
+          "speciesImageUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to a representative species image."
           }
         }
       }
