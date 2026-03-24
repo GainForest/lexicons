@@ -15,11 +15,14 @@ These lexicons are part of the broader **Hypersphere ecosystem** - an open AT Pr
 ## Structure
 
 ```
+docs/                   # Data model guides and workflow documentation
+  audiomoth.md          # Passive acoustic monitoring (AudioMoth) data model guide
 lexicons/
   app/
     bsky/
       richtext/         # Bluesky richtext facet (for compatibility)
     gainforest/
+      ac/               # Audiovisual Core (TDWG AC-aligned) media records
       common/           # Shared definitions (blobs, images, URIs)
       dwc/              # Darwin Core biodiversity records
       evaluator/        # Decentralized evaluator services
@@ -50,6 +53,23 @@ Shared type definitions used across other lexicons:
 - `smallBlob` / `largeBlob` - Generic blob references (10MB / 100MB)
 - `smallImage` / `largeImage` - Image blobs (5MB / 10MB, JPEG/PNG/WebP)
 - `indexedOrganization` - Organization identity object
+
+### `app.gainforest.ac`
+
+Audiovisual Core (AC) aligned media and deployment records, based on the [TDWG Audiovisual Core standard](https://ac.tdwg.org/) (formerly Audubon Core — same standard, same `ac:` abbreviation). Handles biodiversity-related media resources and the passive acoustic monitoring devices that produce them.
+
+| Lexicon | Type | Description |
+|---------|------|-------------|
+| `ac.multimedia` | record | Generic media record (image, audio, video) linked to a `dwc.occurrence` as evidence. Minimal Dublin Core-style metadata. |
+| `ac.audio` | record | Audio recording with full technical metadata (codec, sample rate, frequency bounds, filters). Links to an occurrence and a deployment. |
+| `ac.deployment` | record | Passive acoustic monitoring device deployment (AudioMoth, Song Meter, Swift, etc.). Captures device config, location, duty cycle, and deployment period. |
+
+**Relationships:**
+- One `ac.deployment` → many `ac.audio` recordings (via `deploymentRef`)
+- One `ac.audio` → one `dwc.occurrence` (via `occurrenceRef`, when a species is detected)
+- One `ac.deployment` → one `dwc.event` (via `eventRef`, for the broader survey context)
+
+See [`docs/audiomoth.md`](docs/audiomoth.md) for a complete guide to the passive acoustic monitoring data model, field mapping, and workflow examples.
 
 ### `app.gainforest.dwc`
 
@@ -171,6 +191,7 @@ goat resolve your-handle.bsky.social
 
 | NSID Pattern | DNS Record | Value |
 |--------------|------------|-------|
+| `app.gainforest.ac.*` | `_lexicon.ac.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.common.*` | `_lexicon.common.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.dwc.*` | `_lexicon.dwc.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.evaluator.*` | `_lexicon.evaluator.gainforest.app` | `did=did:plc:xxxxx` |
@@ -279,6 +300,10 @@ goat get at://your-handle.bsky.social/com.atproto.lexicon.schema/app.gainforest.
 - **procedure** - Write API endpoint
 - **subscription** - Real-time event stream
 
+## Documentation
+
+- [`docs/audiomoth.md`](docs/audiomoth.md) — Passive acoustic monitoring data model: AudioMoth workflow, lexicon relationships, field mapping
+
 ## Resources
 
 - [ATProto Lexicon Specification](https://atproto.com/specs/lexicon)
@@ -287,3 +312,5 @@ goat get at://your-handle.bsky.social/com.atproto.lexicon.schema/app.gainforest.
 - [Darwin Core Standard](https://dwc.tdwg.org/)
 - [Simple Darwin Core](https://dwc.tdwg.org/simple/)
 - [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c)
+- [TDWG Audiovisual Core Standard](https://ac.tdwg.org/)
+- [AudioMoth](https://www.openacousticdevices.info/audiomoth)

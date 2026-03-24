@@ -1,0 +1,159 @@
+{
+  "lexicon": 1,
+  "id": "app.gainforest.ac.audio",
+  "description": "Generic audio resource record aligned with the TDWG Audiovisual Core standard (http://www.tdwg.org/standards/638). Represents a single audio recording (field recording, soundscape, species call) with its technical metadata. Links to a dwc.occurrence as evidence and optionally to an ac.deployment describing the recording device setup. Does not carry location, weather, habitat, or device fields — those belong on dwc.event, dwc.occurrence, or ac.deployment respectively.",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["blob", "metadata", "createdAt"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxGraphemes": 256,
+            "description": "A short human-readable name or label for this audio recording."
+          },
+          "description": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#richtext",
+            "description": "A longer human-readable description of the audio recording content."
+          },
+          "blob": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#audio",
+            "description": "The audio file blob stored on the PDS."
+          },
+          "metadata": {
+            "type": "ref",
+            "ref": "#metadata",
+            "description": "Technical audio metadata (codec, sample rate, duration, frequency bounds, etc.)."
+          },
+          "spectrogram": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#spectrogram",
+            "description": "Spectrogram image of the recording (visual frequency-time representation)."
+          },
+          "thumbnail": {
+            "type": "ref",
+            "ref": "app.gainforest.common.defs#imageThumbnail",
+            "description": "Thumbnail image for display in list views."
+          },
+          "license": {
+            "type": "string",
+            "maxGraphemes": 256,
+            "description": "License for this recording (e.g., CC-BY-4.0, CC0-1.0). Aligns with AC dcterms:rights."
+          },
+          "recordedBy": {
+            "type": "string",
+            "maxGraphemes": 512,
+            "description": "Name of the person or agent who made the recording. Aligns with AC dc:creator. For automated deployments, this is the person who deployed the device."
+          },
+          "tags": {
+            "type": "array",
+            "maxLength": 20,
+            "items": {
+              "type": "string",
+              "maxGraphemes": 64
+            },
+            "description": "Freeform tags for the recording (e.g., 'dawn-chorus', 'rain', 'chainsaw', 'anthropogenic-noise'). Aligns with AC ac:tag."
+          },
+          "occurrenceRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI of the dwc.occurrence record this audio is evidence for. Use when this recording documents a specific species detection or biodiversity observation."
+          },
+          "deploymentRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI of the ac.deployment record describing the recording device setup (device model, gain, location, schedule, etc.)."
+          },
+          "siteRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI of the organization site record where this audio was captured."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Timestamp of record creation in the ATProto PDS."
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Technical audio metadata. These are properties of the audio file itself, not the recording context (location, weather, device). Aligns with AC Resource Creation Vocabulary and Music Ontology terms.",
+      "required": ["channels", "duration", "sampleRate", "recordedAt"],
+      "properties": {
+        "codec": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Audio codec (e.g., 'PCM', 'FLAC', 'MP3', 'AAC')."
+        },
+        "channels": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of audio channels (1 = mono, 2 = stereo)."
+        },
+        "duration": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Duration of the recording in seconds (e.g., '300.0')."
+        },
+        "sampleRate": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Sample rate in Hz (e.g., 44100, 48000, 384000 for ultrasonic). Aligns with AC mo:sample_rate."
+        },
+        "recordedAt": {
+          "type": "string",
+          "format": "datetime",
+          "description": "Date and time the audio was captured (start of recording). Aligns with AC xmp:CreateDate."
+        },
+        "bitDepth": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 64,
+          "description": "Bits per sample (e.g., 16, 24, 32)."
+        },
+        "fileFormat": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "File format (e.g., 'WAV', 'FLAC', 'MP3'). Aligns with AC dc:format."
+        },
+        "fileSizeBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "File size in bytes."
+        },
+        "minFrequencyHz": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Lowest frequency present in the recording in Hz. Aligns with AC ac:freqLow."
+        },
+        "maxFrequencyHz": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Highest frequency present in the recording in Hz. Aligns with AC ac:freqHigh."
+        },
+        "filterHighPassHz": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "High-pass filter cutoff frequency in Hz applied during or after recording. Aligns with AC ac:filterHighPass."
+        },
+        "filterLowPassHz": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Low-pass filter cutoff frequency in Hz applied during or after recording. Aligns with AC ac:filterLowPass."
+        },
+        "signalToNoiseRatio": {
+          "type": "string",
+          "maxGraphemes": 32,
+          "description": "Signal-to-noise ratio in dB."
+        }
+      }
+    }
+  }
+}

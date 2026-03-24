@@ -1,0 +1,127 @@
+{
+  "lexicon": 1,
+  "id": "app.gainforest.ac.deployment",
+  "description": "Bioacoustics recorder deployment record. Describes a passive acoustic monitoring (PAM) device — such as an AudioMoth, Song Meter, or Swift — placed at a fixed location for a period of time. One deployment produces many audio recordings; each ac.audio record references its deployment via deploymentRef. Captures the device configuration, placement details, and duty cycle that are constant across all recordings from that deployment.",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["name", "deviceModel", "deployedAt", "createdAt"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxGraphemes": 256,
+            "description": "A short human-readable label for this deployment (e.g., 'Site A North — AudioMoth March 2024')."
+          },
+          "deviceModel": {
+            "type": "string",
+            "maxGraphemes": 128,
+            "description": "Recording device model name (e.g., 'AudioMoth 1.2.0', 'AudioMoth 1.1.0', 'Wildlife Acoustics Song Meter SM4', 'Cornell Lab Swift'). Aligns with AC ac:captureDevice."
+          },
+          "deviceSerialNumber": {
+            "type": "string",
+            "maxGraphemes": 64,
+            "description": "Device serial number for inventory tracking and cross-referencing recordings."
+          },
+          "firmwareVersion": {
+            "type": "string",
+            "maxGraphemes": 64,
+            "description": "Firmware version loaded on the device at time of deployment (e.g., '1.8.1')."
+          },
+          "gain": {
+            "type": "string",
+            "maxGraphemes": 32,
+            "description": "Gain setting configured on the device (e.g., 'low', 'medium', 'high', 'medium-high', '36dB'). AudioMoth-specific values: low/medium/high/medium-high/medium-low."
+          },
+          "recordingSchedule": {
+            "type": "string",
+            "maxGraphemes": 512,
+            "description": "Human-readable description of the recording duty cycle and schedule (e.g., '5 min on / 10 min off, 18:00–06:00 UTC+0'). For AudioMoth, this reflects the schedule configured via the AudioMoth app."
+          },
+          "sampleRateHz": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Sample rate configured on the device in Hz (e.g., 48000, 192000, 384000 for ultrasonic bat detection)."
+          },
+          "microphoneType": {
+            "type": "string",
+            "maxGraphemes": 128,
+            "description": "Microphone type used (e.g., 'built-in MEMS', 'external electret', 'ultrasonic MEMS', 'Knowles SPH0641LU4H-1')."
+          },
+          "mountingHeight": {
+            "type": "string",
+            "maxGraphemes": 32,
+            "description": "Height above ground at which the device was mounted, in meters (e.g., '1.5')."
+          },
+          "mountingOrientation": {
+            "type": "string",
+            "maxGraphemes": 128,
+            "description": "Orientation of the device microphone (e.g., 'horizontal', 'vertical-facing-up', 'vertical-facing-down', 'angled-45deg')."
+          },
+          "batteryType": {
+            "type": "string",
+            "maxGraphemes": 64,
+            "description": "Battery type used (e.g., 'AA alkaline x3', 'AA lithium x3', 'USB power bank', 'solar panel')."
+          },
+          "storageMedia": {
+            "type": "string",
+            "maxGraphemes": 128,
+            "description": "Storage media type and capacity (e.g., 'microSD 128GB SanDisk Endurance')."
+          },
+          "deployedAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Date and time the device was placed and activated at the deployment location."
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Date and time the device was collected and deactivated. Null if still active."
+          },
+          "decimalLatitude": {
+            "type": "string",
+            "maxGraphemes": 32,
+            "description": "Decimal latitude of the deployment location in WGS84 (e.g., '-3.7452'). Aligns with dwc:decimalLatitude."
+          },
+          "decimalLongitude": {
+            "type": "string",
+            "maxGraphemes": 32,
+            "description": "Decimal longitude of the deployment location in WGS84 (e.g., '-62.2159'). Aligns with dwc:decimalLongitude."
+          },
+          "altitude": {
+            "type": "string",
+            "maxGraphemes": 32,
+            "description": "Altitude of the deployment location in meters above sea level (e.g., '312')."
+          },
+          "habitat": {
+            "type": "string",
+            "maxGraphemes": 512,
+            "description": "Brief habitat description at the deployment site (e.g., 'primary rainforest edge, closed canopy ~30m'). Aligns with dwc:habitat."
+          },
+          "siteRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI of the organization site record this deployment belongs to."
+          },
+          "eventRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI of the dwc.event sampling event this deployment is part of."
+          },
+          "remarks": {
+            "type": "string",
+            "maxGraphemes": 1024,
+            "description": "Free-text remarks about the deployment (e.g., notable issues, vegetation around device, signs of disturbance)."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Timestamp of record creation in the ATProto PDS."
+          }
+        }
+      }
+    }
+  }
+}
