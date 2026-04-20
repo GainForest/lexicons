@@ -44,12 +44,7 @@
               "type": "string",
               "maxGraphemes": 64,
               "knownValues": [
-                "leaflet-editor-draft",
-                "organization-info-longDescription",
-                "temporary-upload-anchor",
-                "draft",
-                "attached",
-                "other"
+                "image-in-linear-document"
               ]
             }
           },
