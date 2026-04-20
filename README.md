@@ -59,7 +59,7 @@ Shared type definitions used across other lexicons:
 
 Generic durable asset records for uploaded files that need to persist while awaiting final attachment.
 
-- `asset.file` - Generic blob anchor record with optional metadata (`category`, `title`, `description`, `tags`)
+- `asset.file` - Generic blob anchor record with optional `tags`
 
 ### `app.gainforest.ac`
 
