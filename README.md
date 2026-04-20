@@ -22,6 +22,7 @@ lexicons/
     bsky/
       richtext/         # Bluesky richtext facet (for compatibility)
     gainforest/
+      asset/            # Generic durable asset/blob anchor records
       ac/               # Audiovisual Core (TDWG AC-aligned) media records
       common/           # Shared definitions (blobs, images, URIs)
       dwc/              # Darwin Core biodiversity records
@@ -53,6 +54,12 @@ Shared type definitions used across other lexicons:
 - `smallBlob` / `largeBlob` - Generic blob references (10MB / 100MB)
 - `smallImage` / `largeImage` - Image blobs (5MB / 10MB, JPEG/PNG/WebP)
 - `indexedOrganization` - Organization identity object
+
+### `app.gainforest.asset`
+
+Generic durable asset records for uploaded files that need to persist while awaiting final attachment.
+
+- `asset.file` - Generic blob anchor record with optional metadata (`category`, `title`, `description`, `tags`)
 
 ### `app.gainforest.ac`
 
@@ -192,6 +199,7 @@ goat resolve your-handle.bsky.social
 | NSID Pattern | DNS Record | Value |
 |--------------|------------|-------|
 | `app.gainforest.ac.*` | `_lexicon.ac.gainforest.app` | `did=did:plc:xxxxx` |
+| `app.gainforest.asset.*` | `_lexicon.asset.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.common.*` | `_lexicon.common.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.dwc.*` | `_lexicon.dwc.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.evaluator.*` | `_lexicon.evaluator.gainforest.app` | `did=did:plc:xxxxx` |

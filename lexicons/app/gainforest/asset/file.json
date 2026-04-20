@@ -1,0 +1,65 @@
+{
+  "lexicon": 1,
+  "id": "app.gainforest.asset.file",
+  "description": "Generic durable asset record for uploaded blobs. Example use: anchoring uploads during draft editing so blobs persist until final records reference them.",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": [
+          "file",
+          "createdAt"
+        ],
+        "properties": {
+          "file": {
+            "type": "blob",
+            "accept": [
+              "*/*"
+            ],
+            "maxSize": 104857600,
+            "description": "Uploaded file blob. This record can be used as a durable anchor so temporary uploads are not garbage-collected before final attachment."
+          },
+          "category": {
+            "type": "string",
+            "maxGraphemes": 128,
+            "description": "Optional developer-defined semantic category (for example: tree-image, plant-image, mammal-image)."
+          },
+          "title": {
+            "type": "string",
+            "maxGraphemes": 256,
+            "description": "Optional short title for the asset."
+          },
+          "description": {
+            "type": "string",
+            "maxGraphemes": 2048,
+            "description": "Optional human-readable description of the asset."
+          },
+          "tags": {
+            "type": "array",
+            "description": "Optional machine-readable tags for quick checks and filtering.",
+            "maxLength": 32,
+            "items": {
+              "type": "string",
+              "maxGraphemes": 64,
+              "knownValues": [
+                "leaflet-editor-draft",
+                "organization-info-longDescription",
+                "temporary-upload-anchor",
+                "draft",
+                "attached",
+                "other"
+              ]
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Timestamp of record creation in the ATProto PDS."
+          }
+        }
+      }
+    }
+  }
+}
