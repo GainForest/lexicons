@@ -1,0 +1,54 @@
+{
+  "lexicon": 1,
+  "id": "app.gainforest.dwc.dataset",
+  "description": "A named dataset grouping a batch of Darwin Core occurrence records uploaded together. Created during the tree upload wizard so users can manage and reference their uploads as cohesive units.",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A user-named dataset representing a batch of uploaded occurrence records.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": [
+          "name",
+          "createdAt"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User-given name for the dataset (e.g. 'March 2025 Danum Valley Survey').",
+            "maxGraphemes": 256
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description of the dataset contents, methodology, or purpose.",
+            "maxGraphemes": 2048
+          },
+          "recordCount": {
+            "type": "integer",
+            "description": "Number of occurrence records in this dataset. Set after upload completes.",
+            "minimum": 0
+          },
+          "establishmentMeans": {
+            "type": "string",
+            "description": "Batch-level establishment means for all records in this dataset. Uses the GBIF controlled vocabulary.",
+            "maxGraphemes": 64,
+            "enum": [
+              "native",
+              "introduced",
+              "naturalised",
+              "invasive",
+              "managed",
+              "uncertain"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Timestamp of dataset creation in the ATProto PDS."
+          }
+        }
+      }
+    }
+  }
+}
