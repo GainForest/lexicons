@@ -49,6 +49,7 @@
             "description": "The objectives of the organization or project",
             "items": {
               "type": "string",
+              "maxGraphemes": 64,
               "enum": [
                 "Conservation",
                 "Research",
@@ -66,15 +67,19 @@
           "website": {
             "type": "string",
             "description": "The website of the organization or project",
-            "format": "uri"
+            "format": "uri",
+            "maxGraphemes": 512
           },
           "country": {
             "type": "string",
-            "description": "The country of the organization or project in two letter code (ISO 3166-1 alpha-2)"
+            "description": "The country of the organization or project in two letter code (ISO 3166-1 alpha-2)",
+            "minLength": 2,
+            "maxLength": 2
           },
           "visibility": {
             "type": "string",
             "description": "The visibility of the organization or project in the Green Globe",
+            "maxGraphemes": 32,
             "enum": ["Public", "Unlisted"]
           },
           "createdAt": {

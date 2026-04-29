@@ -11,6 +11,7 @@
       "properties": {
         "text": {
           "type": "string",
+          "maxGraphemes": 10000,
           "description": "The text to be formatted"
         },
         "facets": {
@@ -292,10 +293,12 @@
         "id": {
           "type": "string",
           "format": "uri",
+          "maxGraphemes": 2048,
           "description": "The URI of the organization"
         },
         "name": {
           "type": "string",
+          "maxGraphemes": 256,
           "description": "The name of the organization"
         }
       }

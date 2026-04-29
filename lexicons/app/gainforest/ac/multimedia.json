@@ -5,6 +5,7 @@
   "defs": {
     "main": {
       "type": "record",
+      "description": "A multimedia evidence record associated with a biodiversity occurrence.",
       "key": "tid",
       "record": {
         "type": "object",

@@ -27,6 +27,9 @@ lexicons/
       common/           # Shared definitions (blobs, images, URIs)
       dwc/              # Darwin Core biodiversity records
       evaluator/        # Decentralized evaluator services
+      funding/          # Funding and donation configuration records
+      gbif/             # GBIF-aligned dataset records
+      link/             # Wallet and identity link records
       organization/     # Organization-related schemas
         observations/   # Observation records (dendogram, fauna, flora, trees)
         predictions/    # Prediction records (fauna, flora)
@@ -92,6 +95,24 @@ Darwin Core (DwC) aligned biodiversity records following the [TDWG Simple Darwin
 **Relationships:**
 - Multiple `occurrence` records can reference one `event` via `eventRef` (AT-URI)
 - Multiple `measurement` records can reference one `occurrence` via `occurrenceRef` (AT-URI)
+
+### `app.gainforest.funding`
+
+Funding and donation configuration records:
+
+- `funding.config` - Donation settings for a record, including receiving wallet reference, fundraising goal, and donation limits
+
+### `app.gainforest.gbif`
+
+GBIF-aligned dataset metadata:
+
+- `gbif.dataset` - Dataset-level metadata for biodiversity data publication and exchange
+
+### `app.gainforest.link`
+
+Identity and wallet link records:
+
+- `link.evm` - Verifiable link between an ATProto DID and an EVM wallet address with user proof and platform attestation
 
 ### `app.gainforest.evaluator`
 
@@ -203,6 +224,9 @@ goat resolve your-handle.bsky.social
 | `app.gainforest.common.*` | `_lexicon.common.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.dwc.*` | `_lexicon.dwc.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.evaluator.*` | `_lexicon.evaluator.gainforest.app` | `did=did:plc:xxxxx` |
+| `app.gainforest.funding.*` | `_lexicon.funding.gainforest.app` | `did=did:plc:xxxxx` |
+| `app.gainforest.gbif.*` | `_lexicon.gbif.gainforest.app` | `did=did:plc:xxxxx` |
+| `app.gainforest.link.*` | `_lexicon.link.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.*` | `_lexicon.organization.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.observations.*` | `_lexicon.observations.organization.gainforest.app` | `did=did:plc:xxxxx` |
 | `app.gainforest.organization.predictions.*` | `_lexicon.predictions.organization.gainforest.app` | `did=did:plc:xxxxx` |

@@ -5,6 +5,7 @@
   "defs": {
     "main": {
       "type": "record",
+      "description": "A durable asset anchor record for an uploaded blob and optional tags.",
       "key": "tid",
       "record": {
         "type": "object",

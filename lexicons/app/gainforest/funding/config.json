@@ -1,11 +1,11 @@
 {
     "lexicon": 1,
-    "id": "app.bumicerts.funding.config",
+    "id": "app.gainforest.funding.config",
     "description": "A record that represents the funding / donations configuration for a given bumicert. It shares the same rkey as the claim.activity (bumicert) record.",
     "defs": {
         "evmLinkRef": {
             "type": "object",
-            "description": "Reference to an EVM wallet link record (app.bumicerts.link.evm).",
+            "description": "Reference to an EVM wallet link record (app.gainforest.link.evm).",
             "required": [
                 "uri"
             ],
@@ -13,7 +13,7 @@
                 "uri": {
                     "type": "string",
                     "format": "at-uri",
-                    "description": "AT-URI of the app.bumicerts.link.evm record."
+                    "description": "AT-URI of the app.gainforest.link.evm record."
                 }
             }
         },
@@ -59,6 +59,7 @@
                     "status": {
                         "type": "string",
                         "description": "The current status of the listing. Defaults to 'open'.",
+                        "maxLength": 20,
                         "knownValues": [
                             "coming-soon",
                             "open",

@@ -5,6 +5,7 @@
   "defs": {
     "main": {
       "type": "record",
+      "description": "An audio recording record with technical metadata and optional links to occurrence, deployment, and site records.",
       "key": "tid",
       "record": {
         "type": "object",

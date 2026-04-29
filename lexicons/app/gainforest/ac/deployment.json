@@ -5,6 +5,7 @@
   "defs": {
     "main": {
       "type": "record",
+      "description": "A passive acoustic monitoring device deployment record describing recorder setup, placement, and timing.",
       "key": "tid",
       "record": {
         "type": "object",
