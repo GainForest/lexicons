@@ -150,6 +150,19 @@
             "description": "The behavior shown by the subject at the time of occurrence (e.g., 'foraging', 'nesting', 'roosting').",
             "maxGraphemes": 256
           },
+          "establishmentMeans": {
+            "type": "string",
+            "description": "Darwin Core establishment means for this occurrence. Uses the GBIF controlled vocabulary.",
+            "maxGraphemes": 64,
+            "enum": [
+              "native",
+              "introduced",
+              "naturalised",
+              "invasive",
+              "managed",
+              "uncertain"
+            ]
+          },
           "occurrenceStatus": {
             "type": "string",
             "description": "Statement about the presence or absence of a taxon at a location.",
