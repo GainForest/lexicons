@@ -17,6 +17,7 @@ These lexicons are part of the broader **Hypersphere ecosystem** - an open AT Pr
 ```
 docs/                   # Data model guides and workflow documentation
   audiomoth.md          # Passive acoustic monitoring (AudioMoth) data model guide
+  layers.md             # Layer and layer group data model guide
 lexicons/
   app/
     bsky/
@@ -31,6 +32,8 @@ lexicons/
       gbif/             # GBIF-aligned dataset records
       link/             # Wallet and identity link records
       organization/     # Organization-related schemas
+        layer.json       # Atomic map layer definitions
+        layerGroup.json  # Layer stacks, time series, and site manifests
         observations/   # Observation records (dendogram, fauna, flora, trees)
         predictions/    # Prediction records (fauna, flora)
   com/
@@ -154,7 +157,8 @@ Organization profiles, site configurations, and biodiversity data:
 
 - `info` - Organization profile information
 - `defaultSite` - Default site configuration
-- `layer` - Map layer definitions
+- `layer` - Atomic map layer definitions. New records should set `siteRef`; optional `layerGroupRef`, `capturedAt`, `validFrom`, `validTo`, and `sequence` support grouping and temporal scrubbers.
+- `layerGroup` - Related layer collections for a site, including layer stacks, time-series scrubbers, and site layer catalogs.
 - `getIndexedOrganizations` - Query for indexed organizations
 - `observations/` - Observation records (dendogram, fauna, flora, measuredTreesCluster)
 - `predictions/` - Prediction records (fauna, flora)
@@ -335,6 +339,7 @@ goat get at://your-handle.bsky.social/com.atproto.lexicon.schema/app.gainforest.
 ## Documentation
 
 - [`docs/audiomoth.md`](docs/audiomoth.md) — Passive acoustic monitoring data model: AudioMoth workflow, lexicon relationships, field mapping
+- [`docs/layers.md`](docs/layers.md) — Layer and layer group model: site-scoped fetching, stacked layers, and time scrubbing
 
 ## Resources
 

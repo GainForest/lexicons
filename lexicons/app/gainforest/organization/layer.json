@@ -13,7 +13,7 @@
           "name": {
             "type": "string",
             "maxGraphemes": 256,
-            "description": "The name of the site"
+            "description": "The name of the layer"
           },
           "type": {
             "type": "string",
@@ -153,7 +153,42 @@
           "siteRef": {
             "type": "string",
             "format": "at-uri",
-            "description": "AT-URI reference to the site this layer belongs to"
+            "description": "AT-URI reference to the site this layer belongs to. New layer records should set this so clients and indexers can fetch layers for a site without returning unrelated layers."
+          },
+          "layerGroupRef": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI reference to the primary app.gainforest.organization.layerGroup this layer belongs to"
+          },
+          "layerGroupName": {
+            "type": "string",
+            "maxGraphemes": 256,
+            "description": "Denormalized display name of the primary layer group. Prefer layerGroupRef for durable identity."
+          },
+          "capturedAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "When the source data for this layer was captured or observed"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Start of the time interval represented by this layer"
+          },
+          "validTo": {
+            "type": "string",
+            "format": "datetime",
+            "description": "End of the time interval represented by this layer"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Sequence index for ordered or time-scrubbable layers when timestamps are absent or equal"
+          },
+          "timeLabel": {
+            "type": "string",
+            "maxGraphemes": 128,
+            "description": "Human-readable temporal label for this layer in scrubbers (e.g., 'Jan 2025')"
           }
         }
       }
