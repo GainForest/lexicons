@@ -237,237 +237,92 @@ function renderPage(markdown) {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GainForest Hypersphere Architecture</title>
   <style>
-    :root {
-      color-scheme: dark;
-      --ink: #eef8df;
-      --muted: #abc3a1;
-      --moss: #8bcf69;
-      --liana: #d9ff8d;
-      --bark: #182015;
-      --deep: #071008;
-      --panel: rgba(20, 34, 21, 0.74);
-      --line: rgba(217, 255, 141, 0.22);
-      --shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
-    }
-
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 12% 7%, rgba(139, 207, 105, 0.22), transparent 34rem),
-        radial-gradient(circle at 87% 3%, rgba(217, 255, 141, 0.13), transparent 32rem),
-        linear-gradient(135deg, #081209 0%, #11180f 42%, #071008 100%);
-      color: var(--ink);
-      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
-      line-height: 1.68;
+      background: #ffffff;
+      color: #000000;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.12;
-      background-image:
-        linear-gradient(rgba(238, 248, 223, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(238, 248, 223, 0.08) 1px, transparent 1px);
-      background-size: 44px 44px;
-      mask-image: radial-gradient(circle at center, black, transparent 78%);
-    }
-
-    .shell {
-      width: min(1120px, calc(100% - 32px));
+    main {
+      width: min(900px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 34px 0 72px;
+      padding: 32px 0 64px;
     }
 
-    .topbar {
-      align-items: center;
-      display: flex;
-      gap: 16px;
-      justify-content: space-between;
-      margin-bottom: 46px;
+    nav {
+      margin-bottom: 32px;
     }
 
-    .brand {
-      color: var(--liana);
-      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-    }
-
-    .raw-link {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--deep);
-      background: var(--liana);
-      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
-      font-size: 0.82rem;
-      font-weight: 700;
-      padding: 10px 16px;
-      text-decoration: none;
-      transition: transform 160ms ease, box-shadow 160ms ease;
-    }
-
-    .raw-link:hover {
-      box-shadow: 0 12px 34px rgba(217, 255, 141, 0.22);
-      transform: translateY(-2px);
-    }
-
-    .hero {
-      border: 1px solid var(--line);
-      border-radius: 34px;
-      background: linear-gradient(135deg, rgba(238, 248, 223, 0.08), rgba(139, 207, 105, 0.08));
-      box-shadow: var(--shadow);
-      margin-bottom: 26px;
-      overflow: hidden;
-      padding: clamp(28px, 7vw, 76px);
-      position: relative;
-    }
-
-    .hero::after {
-      content: "ATProto × DwC × Hypersphere";
-      bottom: 24px;
-      color: rgba(217, 255, 141, 0.18);
-      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
-      font-size: clamp(1.7rem, 6vw, 6rem);
-      font-weight: 800;
-      line-height: 0.9;
-      position: absolute;
-      right: -18px;
-      text-align: right;
-      width: min-content;
-      z-index: 0;
-    }
-
-    .hero > * { position: relative; z-index: 1; }
-    .eyebrow {
-      color: var(--moss);
-      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+    a {
+      color: #000000;
     }
 
     h1, h2, h3, h4, h5, h6 {
-      line-height: 1.08;
-      margin: 2.25rem 0 0.85rem;
-      text-wrap: balance;
+      line-height: 1.2;
+      margin: 2rem 0 0.75rem;
     }
 
-    .hero h1 {
-      font-size: clamp(3.2rem, 10vw, 8.2rem);
-      letter-spacing: -0.08em;
-      margin: 0.28em 0 0.18em;
-      max-width: 850px;
+    h1 {
+      font-size: 2rem;
+      margin-top: 0;
     }
 
-    .hero p {
-      color: var(--muted);
-      font-size: clamp(1.1rem, 2vw, 1.35rem);
-      max-width: 720px;
-    }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.2rem; }
 
-    article {
-      backdrop-filter: blur(18px);
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 34px;
-      box-shadow: var(--shadow);
-      padding: clamp(24px, 5vw, 64px);
-    }
-
-    article h1:first-child,
-    article h1:first-child + p,
-    article h1:first-child + p + p,
-    article h1:first-child + p + p + hr { display: none; }
-
-    h2 {
-      border-top: 1px solid var(--line);
-      color: var(--liana);
-      font-size: clamp(2rem, 4vw, 3.6rem);
-      letter-spacing: -0.045em;
-      padding-top: 2rem;
-    }
-
-    h3 {
-      color: var(--ink);
-      font-size: clamp(1.35rem, 2.4vw, 2.05rem);
-      letter-spacing: -0.025em;
-    }
-
-    p, li { color: rgba(238, 248, 223, 0.88); }
-    p { margin: 0.7rem 0 1.1rem; }
+    p { margin: 0 0 1rem; }
     ul, ol { padding-left: 1.5rem; }
-    li + li { margin-top: 0.42rem; }
-    a { color: var(--liana); text-decoration-color: rgba(217, 255, 141, 0.42); text-underline-offset: 0.18em; }
-    strong { color: #ffffff; }
+    li + li { margin-top: 0.25rem; }
+
+    code, pre {
+      font-family: "Courier New", Courier, monospace;
+    }
+
     code {
-      background: rgba(7, 16, 8, 0.72);
-      border: 1px solid rgba(217, 255, 141, 0.16);
-      border-radius: 0.45em;
-      color: #e4ffb0;
-      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
-      font-size: 0.9em;
-      padding: 0.12em 0.34em;
+      background: #f2f2f2;
+      padding: 0.1rem 0.25rem;
+    }
+
+    pre {
+      background: #f2f2f2;
+      overflow-x: auto;
+      padding: 1rem;
     }
 
     hr {
       border: 0;
-      border-top: 1px dashed var(--line);
-      margin: 2.2rem 0;
+      border-top: 1px solid #000000;
+      margin: 2rem 0;
     }
 
     .table-frame {
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      margin: 1.3rem 0 1.9rem;
       overflow-x: auto;
+      margin: 1rem 0;
     }
 
     table {
       border-collapse: collapse;
-      min-width: 100%;
+      width: 100%;
     }
 
     th, td {
-      border-bottom: 1px solid rgba(217, 255, 141, 0.15);
-      padding: 0.78rem 0.9rem;
+      border: 1px solid #000000;
+      padding: 0.5rem;
       text-align: left;
       vertical-align: top;
-    }
-
-    th {
-      background: rgba(217, 255, 141, 0.1);
-      color: #ffffff;
-      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
-      font-size: 0.77rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    tr:last-child td { border-bottom: 0; }
-
-    @media (max-width: 680px) {
-      .topbar { align-items: flex-start; flex-direction: column; }
-      .hero, article { border-radius: 24px; }
     }
   </style>
 </head>
 <body>
-  <main class="shell">
-    <nav class="topbar" aria-label="Document routes">
-      <span class="brand">GainForest docs for iNaturalist</span>
-      <a class="raw-link" href="/architecture.md">Raw markdown</a>
+  <main>
+    <nav aria-label="Document routes">
+      <a href="/architecture.md">Raw markdown</a>
     </nav>
-    <header class="hero">
-      <div class="eyebrow">Architecture briefing</div>
-      <h1>Hypersphere Architecture</h1>
-      <p>Self-sovereign biodiversity observations, Darwin Core-aligned lexicons, decentralized evaluators, and auditable conservation evidence on AT Protocol.</p>
-    </header>
     <article aria-label="Rendered architecture document">
       ${article}
     </article>
