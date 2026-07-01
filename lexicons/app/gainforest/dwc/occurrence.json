@@ -507,6 +507,15 @@
             "description": "Name of the monitoring programme under which this occurrence was recorded.",
             "maxGraphemes": 256
           },
+          "category": {
+            "type": "string",
+            "description": "Classifies the purpose of this occurrence so management actions can be distinguished from wild observations for indexing and filtering. Open vocabulary: 'observation' for a general biodiversity sighting or measurement; 'pestControl' for a pest/predator control action such as a trap catch, bait take, or cull. When omitted, treat the record as a general observation.",
+            "maxGraphemes": 64,
+            "knownValues": [
+              "observation",
+              "pestControl"
+            ]
+          },
           "datasetRef": {
             "type": "string",
             "format": "at-uri",
