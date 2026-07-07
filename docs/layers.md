@@ -1,27 +1,33 @@
 # Layers & Layer Groups
 
-This document explains how to think about map layers in general, and how to model them with the GainForest organization layer lexicons.
+This document explains how to model map layers with the GainForest organization
+layer lexicons, and how repeat captures of the same area become
+change-over-time series.
+
+The schemas are deliberately minimal: every field is either written by a real
+publisher or read by a real client today. Fields are added when a consumer
+needs them, not ahead of time.
 
 ## What is a Layer?
 
-A map layer is one visual or analytical dataset that can be placed on a map. Examples include:
+A map layer is one visual or analytical dataset that can be placed on a map.
+Examples include:
 
-- drone imagery
-- satellite imagery
-- elevation or canopy-height rasters
+- drone orthomosaics (COG GeoTIFFs)
 - GeoJSON points for trees, sensors, or observations
-- GeoJSON lines for trails, rivers, or transects
-- polygons for project boundaries, land-cover classes, or conservation zones
-- heatmaps, contours, and tiled map overlays
+- GeoJSON lines for trails, rivers, or tree-crown delineations
+- polygons for land-cover classes or conservation zones
+- tiled map overlays
 
-A layer should be treated as an **atomic renderable source**. If a client can turn it on/off as one map item, it is probably one layer.
+A layer is an **atomic renderable source**. If a client can turn it on/off as
+one map item, it is one layer.
 
 ## Lexicons
 
 | Lexicon | Meaning |
 |---------|---------|
-| `app.gainforest.organization.layer` | One renderable map source. |
-| `app.gainforest.organization.layerGroup` | A related set of layers for one site. Used for stacks, timelines, and catalogs. |
+| `app.gainforest.organization.layer` | One renderable map product. |
+| `app.gainforest.organization.layerGroup` | A named area monitored over time. Layers join it via `groupRef`. |
 
 ## Core Model
 
@@ -30,166 +36,110 @@ A layer should be treated as an **atomic renderable source**. If a client can tu
 A `layer` stores the data source and rendering metadata:
 
 - `name` — display name
-- `type` — source/rendering type, such as `raster_tif`, `tms_tile`, `geojson_points`, `satellite_overlay`
-- `uri` / `tilePattern` — where the layer data lives
-- `siteRef` — the site this layer belongs to
-- `layerGroupRef` — optional reference to its primary group
-- `capturedAt`, `validFrom`, `validTo`, `sequence`, `timeLabel` — optional temporal metadata
-- visual metadata such as `legend`, `colorScale`, `opacity`, `bounds`, `unit`, `propertyKey`
+- `type` — rendering type (`raster_tif`, `tms_tile`, `geojson_points`,
+  `geojson_points_trees`, `geojson_line`, `choropleth`, `choropleth_shannon`).
+  An open set (`knownValues`): clients ignore layers whose type they cannot
+  render.
+- `uri` — where the layer data lives: a GeoJSON file, a COG GeoTIFF, or a
+  `{z}/{x}/{y}` tile template
+- `bounds` — geographic footprint as `'west,south,east,north'` in WGS84
+  decimal degrees (a string, because lexicons have no float type)
+- `capturedAt` — when the underlying data was captured in the field (e.g. the
+  drone flight date). The one canonical temporal field.
+- `groupRef` — AT-URI of the `layerGroup` (monitored area) this layer belongs to
+- `siteRef` — AT-URI of the project site this layer belongs to
+- `category`, `isDefault`, `displayOrder`, `legend` — display metadata
 
 ### `layerGroup`
 
-A `layerGroup` describes how multiple layers relate to each other.
+A `layerGroup` is a small named anchor for a **monitored area** — a place an
+organization surveys repeatedly, like a mangrove restoration plot that is
+re-flown by drone:
 
-Supported group styles:
+- `name` — e.g. `"Tumanan"`
+- `description` — what the area is and why it is monitored
+- `siteRef` — optional link to the project site
+- `bounds` — optional footprint; clients fall back to the union of member
+  layer bounds
 
-- `stack` — multiple layers shown together
-- `time_series` — layers represent time slices for a scrubber/timeline
-- `catalog` — related layers grouped for browsing
-- `single` — a wrapper around one main layer, useful for consistent UI handling
+The group holds **no member list**. Layers join a group by setting their
+`groupRef` to the group record's AT-URI.
 
-A group belongs to a site through `siteRef` and references child layers through `layers[].layerRef`.
+## Membership Is Child → Parent, Append-Only
 
-## Site-Scoped Fetching
+The relationship is single-sourced and one-directional:
 
-For new records, always set `siteRef` on both layer groups and layers.
+- `layer.groupRef` → `layerGroup` record.
 
-This lets an indexer/AppView answer questions like:
+Publishing a new capture of a monitored area is **one appended layer record**
+with `groupRef` set. The group record is never edited, so there is no member
+array to keep in sync, no write contention on a central record, and no cap on
+how many captures an area can accumulate.
 
-- “Give me all layer groups for Site A.”
-- “Give me all layers for Site A.”
-- “Which site does this layer belong to?”
+## Time-Series Semantics Emerge from the Members
 
-For raw PDS clients that cannot filter records by fields, `layerGroup.layers[]` can also act as a manifest of exact layer records to fetch.
+Clients derive behaviour from the member layers — there is no `groupType`
+field to declare it:
 
-## Relationship Pattern
+- Members spanning **two or more distinct `capturedAt` days** make the group a
+  **time series**: clients offer a time slider whose stops are the distinct
+  capture days, ordered ascending.
+- Members sharing **one capture day** are **products of the same survey** —
+  e.g. an orthomosaic plus the tree-crown delineations derived from it — and
+  render together at that slider stop.
+- A group whose members span a single day is just a bundle of related
+  products; clients render the members normally.
 
-Use AT-URI references as the durable relationship:
+## Worked Example (real data)
 
-- `layer.layerGroupRef` points from a layer to its group.
-- `layerGroup.layers[].layerRef` points from a group to its layers.
-- `layer.layerGroupName` is only denormalized display/search text.
-
-This gives a practical two-way relationship without making names into identifiers.
-
-## Stacked Layers
-
-Use `groupType: "stack"` when a site view is made from multiple layers at once.
-
-Short example: Site 1 has drone imagery, a valley height model, and tree points.
-
-```json
-{
-  "$type": "app.gainforest.organization.layerGroup",
-  "name": "Site 1 map overview",
-  "siteRef": "at://did:plc:org/app.gainforest.organization.site/site1",
-  "groupType": "stack",
-  "layers": [
-    {
-      "layerRef": "at://did:plc:org/app.gainforest.organization.layer/site1-drone",
-      "label": "Drone imagery",
-      "role": "base",
-      "displayOrder": 0
-    },
-    {
-      "layerRef": "at://did:plc:org/app.gainforest.organization.layer/site1-height",
-      "label": "Valley height",
-      "role": "overlay",
-      "displayOrder": 1,
-      "opacity": "0.65"
-    },
-    {
-      "layerRef": "at://did:plc:org/app.gainforest.organization.layer/site1-trees",
-      "label": "Tree points",
-      "role": "annotation",
-      "displayOrder": 2
-    }
-  ],
-  "createdAt": "2026-06-04T00:00:00.000Z"
-}
-```
-
-Each referenced child is a normal `layer` record. For example, the tree layer might be:
-
-```json
-{
-  "$type": "app.gainforest.organization.layer",
-  "name": "Site 1 tree points",
-  "type": "geojson_points_trees",
-  "uri": "https://example.org/site1/trees.geojson",
-  "siteRef": "at://did:plc:org/app.gainforest.organization.site/site1",
-  "layerGroupRef": "at://did:plc:org/app.gainforest.organization.layerGroup/site1-overview",
-  "layerGroupName": "Site 1 map overview",
-  "createdAt": "2026-06-04T00:00:00.000Z"
-}
-```
-
-Clients should render stack items by `displayOrder`; lower values render first.
-
-## Time-Series Layers
-
-Use `groupType: "time_series"` when the same kind of layer is measured repeatedly over time.
-
-Short example: Site 2 has quarterly drone imagery for three years. That is 12 layer records, grouped into one timeline.
+Oceanus Conservation re-flies the Tumanan mangrove area. The monitored area is
+one `layerGroup`:
 
 ```json
 {
   "$type": "app.gainforest.organization.layerGroup",
-  "name": "Site 2 drone imagery timeline",
-  "siteRef": "at://did:plc:org/app.gainforest.organization.site/site2",
-  "groupType": "time_series",
-  "temporalResolution": "quarterly",
-  "layers": [
-    {
-      "layerRef": "at://did:plc:org/app.gainforest.organization.layer/site2-drone-2023-q1",
-      "label": "2023 Q1",
-      "capturedAt": "2023-01-15T00:00:00.000Z",
-      "sequence": 0
-    },
-    {
-      "layerRef": "at://did:plc:org/app.gainforest.organization.layer/site2-drone-2023-q2",
-      "label": "2023 Q2",
-      "capturedAt": "2023-04-15T00:00:00.000Z",
-      "sequence": 1
-    },
-    {
-      "layerRef": "at://did:plc:org/app.gainforest.organization.layer/site2-drone-2025-q4",
-      "label": "2025 Q4",
-      "capturedAt": "2025-10-15T00:00:00.000Z",
-      "sequence": 11
-    }
-  ],
-  "createdAt": "2026-06-04T00:00:00.000Z"
+  "name": "Tumanan",
+  "description": "Drone monitoring area — repeat captures of Tumanan grouped into a change-over-time series.",
+  "bounds": "126.34303096,8.25471625,126.35772009,8.26481389",
+  "createdAt": "2026-07-07T00:00:00.000Z"
 }
 ```
 
-A child layer for one quarter might look like:
+Each flight is a normal `layer` pointing back at it:
 
 ```json
 {
   "$type": "app.gainforest.organization.layer",
-  "name": "Site 2 drone imagery 2023 Q1",
-  "type": "satellite_overlay",
-  "uri": "https://example.org/site2/drone/2023-q1/{z}/{x}/{y}.png",
-  "tilePattern": "https://example.org/site2/drone/2023-q1/{z}/{x}/{y}.png",
-  "siteRef": "at://did:plc:org/app.gainforest.organization.site/site2",
-  "layerGroupRef": "at://did:plc:org/app.gainforest.organization.layerGroup/site2-drone-timeline",
-  "layerGroupName": "Site 2 drone imagery timeline",
-  "capturedAt": "2023-01-15T00:00:00.000Z",
-  "validFrom": "2023-01-01T00:00:00.000Z",
-  "validTo": "2023-03-31T23:59:59.000Z",
-  "sequence": 0,
-  "timeLabel": "2023 Q1",
-  "createdAt": "2026-06-04T00:00:00.000Z"
+  "name": "Tumanan (2025-04-09)",
+  "type": "raster_tif",
+  "uri": "https://gainforest-transparency-dashboard.s3.amazonaws.com/layers/oceanus-conservation/tumanan-2025-04-09.tif",
+  "bounds": "126.34303096,8.25476583,126.35745156,8.26481389",
+  "capturedAt": "2025-04-09T00:00:00.000Z",
+  "groupRef": "at://did:plc:6oxtzu7gxz7xcldvtwfh3bpt/app.gainforest.organization.layerGroup/3xyz…",
+  "createdAt": "2026-07-07T00:00:00.000Z"
 }
 ```
 
-Clients should order timeline items by `capturedAt`, then `validFrom`, then `sequence`.
+With three flights on 2025-04-09, 2025-08-16, and 2025-10-14, clients see three
+distinct capture days and render a time slider. If tree delineations for the
+2025-04-09 flight are published later, they are one more appended layer with
+the same `groupRef` and `capturedAt` — they fade in and out with that flight's
+orthomosaic.
+
+## Fetching
+
+- **Raw PDS clients**: `com.atproto.repo.listRecords` on both collections,
+  then join members to groups by `groupRef` client-side. Both lists are small.
+- **Indexer/AppView clients**: filter layers by `groupRef` (or `siteRef`) and
+  order by `capturedAt`.
 
 ## Recommended Conventions
 
-- Set `siteRef` on every new `layer` and `layerGroup`.
-- Use `layerGroupRef` for durable identity; keep `layerGroupName` as display text only.
-- Use `displayOrder` for stacks and `sequence` for timelines.
-- Put temporal metadata on both the group item and the child layer when possible.
-- Keep each layer atomic. If multiple sources must be turned on/off independently, model them as separate layers and group them.
+- Set `capturedAt` on every capture-derived layer (drone imagery and its
+  derived products). Without it, a layer cannot ride a timeline.
+- Set `groupRef` on every repeat capture of a monitored area, and give
+  same-survey products the same `capturedAt`.
+- Set `bounds` on every layer so clients can fly to it and reason about
+  overlap.
+- Keep each layer atomic: independent on/off toggles are separate layers
+  sharing a `groupRef`.
