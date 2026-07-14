@@ -4,186 +4,37 @@
   "defs": {
     "main": {
       "type": "record",
-      "description": "A declaration of a related group of map layers for an organization site. Groups can model stacks, time series, or catalogs of related layers.",
+      "description": "A named area an organization monitors over time (e.g. a mangrove plot that is re-flown by drone). The group holds no member list: layers join it by setting their `groupRef` to this record's AT-URI, so adding a new capture never edits the group. Clients derive semantics from the members — two or more distinct `capturedAt` days make the group a time series (time slider), and members sharing a capture day are products of the same survey (e.g. an orthomosaic plus its tree delineations) shown together at that stop.",
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["name", "siteRef", "groupType", "createdAt"],
+        "required": ["name", "createdAt"],
         "properties": {
           "name": {
             "type": "string",
             "maxGraphemes": 256,
-            "description": "Display name for the layer group"
+            "description": "Display name of the monitored area (e.g. 'Tumanan')"
           },
           "description": {
             "type": "string",
             "maxGraphemes": 2048,
-            "description": "Description of the layer group, its purpose, or how the contained layers should be interpreted"
+            "description": "What this area is and why it is monitored"
           },
           "siteRef": {
             "type": "string",
             "format": "at-uri",
-            "description": "AT-URI reference to the site this layer group belongs to"
-          },
-          "groupType": {
-            "type": "string",
-            "maxGraphemes": 64,
-            "description": "How the related layers should be interpreted by clients",
-            "knownValues": [
-              "single",
-              "stack",
-              "time_series",
-              "catalog"
-            ]
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "datetime",
-            "description": "The date and time of the creation of the record"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "datetime",
-            "description": "The date and time this layer group metadata was last updated"
-          },
-          "category": {
-            "type": "string",
-            "maxGraphemes": 128,
-            "description": "Layer group category for grouping in UI (e.g., 'Biodiversity', 'Land Cover', 'Climate', 'Infrastructure')"
-          },
-          "displayOrder": {
-            "type": "integer",
-            "minimum": 0,
-            "description": "Ordering priority for display"
-          },
-          "isDefault": {
-            "type": "boolean",
-            "description": "Whether this layer group should be shown by default"
-          },
-          "thumbnail": {
-            "type": "ref",
-            "ref": "app.gainforest.common.defs#imageThumbnail",
-            "description": "Preview thumbnail for the layer group"
-          },
-          "temporalResolution": {
-            "type": "string",
-            "maxGraphemes": 64,
-            "description": "Expected time step for time-series layer groups",
-            "knownValues": [
-              "instant",
-              "daily",
-              "weekly",
-              "monthly",
-              "quarterly",
-              "annual",
-              "irregular",
-              "custom"
-            ]
-          },
-          "timeZone": {
-            "type": "string",
-            "maxGraphemes": 64,
-            "description": "IANA time zone used for temporal labels or capture times, if different from UTC"
+            "description": "AT-URI of the app.certified.location (project site) this area belongs to"
           },
           "bounds": {
             "type": "string",
             "maxGraphemes": 128,
-            "description": "Bounding box for the grouped layers as 'west,south,east,north'"
+            "description": "Geographic footprint as 'west,south,east,north' in WGS84 decimal degrees. Optional — clients fall back to the union of member layer bounds."
           },
-          "dataSource": {
+          "createdAt": {
             "type": "string",
-            "maxGraphemes": 512,
-            "description": "Attribution/source shared by the grouped layer data"
-          },
-          "dataDate": {
-            "type": "string",
-            "maxGraphemes": 64,
-            "description": "Date or date range of the grouped data (ISO 8601 recommended)"
-          },
-          "layers": {
-            "type": "array",
-            "maxLength": 500,
-            "description": "Ordered references to layers in this group. For stacks, order controls rendering. For time series, capturedAt/validFrom/validTo/sequence control scrubbing.",
-            "items": {
-              "type": "ref",
-              "ref": "#layerItem"
-            }
+            "format": "datetime",
+            "description": "When this record was created"
           }
-        }
-      }
-    },
-    "layerItem": {
-      "type": "object",
-      "description": "A layer reference inside a layer group, with optional ordering, rendering, and temporal metadata",
-      "required": ["layerRef"],
-      "properties": {
-        "layerRef": {
-          "type": "string",
-          "format": "at-uri",
-          "description": "AT-URI reference to an app.gainforest.organization.layer record"
-        },
-        "label": {
-          "type": "string",
-          "maxGraphemes": 256,
-          "description": "Display label for this layer within the group"
-        },
-        "role": {
-          "type": "string",
-          "maxGraphemes": 64,
-          "description": "Rendering role of this layer within the group",
-          "knownValues": [
-            "base",
-            "overlay",
-            "mask",
-            "annotation",
-            "comparison",
-            "reference",
-            "other"
-          ]
-        },
-        "displayOrder": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Ordering priority inside the group. For stacks, lower values render first."
-        },
-        "isDefault": {
-          "type": "boolean",
-          "description": "Whether this layer should be initially enabled when the group is loaded"
-        },
-        "opacity": {
-          "type": "string",
-          "maxGraphemes": 8,
-          "description": "Opacity override for this layer within the group (0-1 as string, e.g., '0.7')"
-        },
-        "capturedAt": {
-          "type": "string",
-          "format": "datetime",
-          "description": "When the source data for this layer was captured or observed"
-        },
-        "validFrom": {
-          "type": "string",
-          "format": "datetime",
-          "description": "Start of the time interval represented by this layer"
-        },
-        "validTo": {
-          "type": "string",
-          "format": "datetime",
-          "description": "End of the time interval represented by this layer"
-        },
-        "sequence": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Sequence index for ordered or time-scrubbable layers when timestamps are absent or equal"
-        },
-        "timeLabel": {
-          "type": "string",
-          "maxGraphemes": 128,
-          "description": "Human-readable temporal label for this layer in scrubbers (e.g., 'Jan 2025')"
-        },
-        "styleOverrides": {
-          "type": "string",
-          "maxGraphemes": 4096,
-          "description": "JSON-encoded rendering overrides for this layer within the group"
         }
       }
     }

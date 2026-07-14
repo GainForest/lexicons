@@ -33,7 +33,7 @@ lexicons/
       link/             # Wallet and identity link records
       organization/     # Organization-related schemas
         layer.json       # Atomic map layer definitions
-        layerGroup.json  # Layer stacks, time series, and site manifests
+        layerGroup.json  # Named monitored areas grouping repeat captures
         observations/   # Observation records (dendogram, fauna, flora, trees)
         predictions/    # Prediction records (fauna, flora)
   com/
@@ -157,8 +157,8 @@ Organization profiles, site configurations, and biodiversity data:
 
 - `info` - Organization profile information
 - `defaultSite` - Default site configuration
-- `layer` - Atomic map layer definitions. New records should set `siteRef`; optional `layerGroupRef`, `capturedAt`, `validFrom`, `validTo`, and `sequence` support grouping and temporal scrubbers.
-- `layerGroup` - Related layer collections for a site, including layer stacks, time-series scrubbers, and site layer catalogs.
+- `layer` - Atomic map layer definitions. Capture-derived layers should set `capturedAt` and `bounds`; repeat captures of a monitored area also set `groupRef`.
+- `layerGroup` - A named area monitored over time. Holds no member list — layers join it via `groupRef`, and two or more distinct capture days make it a change-over-time series.
 - `getIndexedOrganizations` - Query for indexed organizations
 - `observations/` - Observation records (dendogram, fauna, flora, measuredTreesCluster)
 - `predictions/` - Prediction records (fauna, flora)
@@ -339,7 +339,7 @@ goat get at://your-handle.bsky.social/com.atproto.lexicon.schema/app.gainforest.
 ## Documentation
 
 - [`docs/audiomoth.md`](docs/audiomoth.md) — Passive acoustic monitoring data model: AudioMoth workflow, lexicon relationships, field mapping
-- [`docs/layers.md`](docs/layers.md) — Layer and layer group model: site-scoped fetching, stacked layers, and time scrubbing
+- [`docs/layers.md`](docs/layers.md) — Layer and layer group model: monitored areas, append-only membership, and change-over-time series
 
 ## Resources
 
