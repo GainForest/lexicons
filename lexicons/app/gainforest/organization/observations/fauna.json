@@ -10,6 +10,11 @@
         "type": "object",
         "required": ["gbifTaxonKeys", "createdAt"],
         "properties": {
+          "uploadedBy": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of the signed-in account that created this record, stamped at write time by the GainForest app. Meaningful when it differs from the repo owner — an organization member acting on the organization's behalf. Optional: records written before this field existed, or outside the app, omit it."
+          },
           "gbifTaxonKeys": {
             "type": "array",
             "description": "An array of GBIF taxon keys for each fauna observation",
