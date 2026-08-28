@@ -11,6 +11,11 @@
         "type": "object",
         "required": ["eventID", "eventDate", "createdAt"],
         "properties": {
+          "uploadedBy": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of the signed-in account that created this record, stamped at write time by the GainForest app."
+          },
           "eventID": {
             "type": "string",
             "description": "An identifier for the event. Should be globally unique or unique within the dataset.",

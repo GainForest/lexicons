@@ -14,6 +14,11 @@
           "createdAt"
         ],
         "properties": {
+          "uploadedBy": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of the signed-in account that created this record, stamped at write time by the GainForest app."
+          },
           "name": {
             "type": "string",
             "description": "User-given name for the dataset (e.g. 'March 2025 Danum Valley Survey').",

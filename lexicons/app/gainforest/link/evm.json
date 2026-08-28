@@ -10,6 +10,11 @@
         "type": "object",
         "required": ["address", "userProof", "platformAttestation", "createdAt"],
         "properties": {
+          "uploadedBy": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of the signed-in account that created this record, stamped at write time by the GainForest app."
+          },
           "name": {
             "type": "string",
             "description": "Optional user-defined name for this wallet link (e.g. 'Personal Wallet', 'Project Treasury'). Helps users identify which wallet this record represents when they have multiple linked wallets.",

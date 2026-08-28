@@ -11,6 +11,11 @@
         "type": "object",
         "required": ["evaluationType", "createdAt"],
         "properties": {
+          "uploadedBy": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of the signed-in account that created this record, stamped at write time by the GainForest app."
+          },
           "subject": {
             "type": "ref",
             "ref": "app.gainforest.evaluator.defs#subjectRef",
